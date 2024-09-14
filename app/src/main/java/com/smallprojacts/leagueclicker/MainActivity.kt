@@ -35,7 +35,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
@@ -68,11 +67,11 @@ fun CustomTextField() {
     var text by remember { mutableStateOf("") }
 
     TextField(
-        value = text,
-        onValueChange = { newText -> text = newText }, // Update state when text changes
-        modifier = Modifier
+        text, { newText -> newText.also { text = it } }, Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp)), // Apply rounded corners
+            .clip(RoundedCornerShape(8.dp)),
+        // Update state when text changes
+        // Apply rounded corners
         colors = TextFieldDefaults.textFieldColors(
             containerColor = fillColor,
             focusedIndicatorColor = Color.Transparent, // Remove focus indicator
@@ -101,7 +100,7 @@ fun container (){
         Column (
             modifier = Modifier
                 .align(Alignment.Center)
-                .offset(y = -20.dp)
+                .offset(y = (-20).dp)
                 .padding(horizontal = 20.dp)
         ){
             Column {
@@ -118,8 +117,8 @@ fun container (){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End, // Align children to the end of the Row
-                    verticalAlignment = Alignment.CenterVertically // Optionally center vertically
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Forgot Password?",
@@ -151,11 +150,11 @@ fun container (){
         contentAlignment = Alignment.Center // Center content within the Box
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logowhite), // Replace with your drawable resource ID
+            painter = painterResource(id = R.drawable.logowhite),
             contentDescription = "Image",
-            contentScale = ContentScale.Fit, // Adjust image scaling to fit within the Box
+            contentScale = ContentScale.Fit,
             modifier = Modifier
-                .fillMaxWidth() // Make the image fill the width of the Box
+                .fillMaxWidth()
         )
     }
 }
