@@ -51,20 +51,3 @@ fun StateMeter(modifier: Modifier = Modifier, stat: String, level: Int) {
     }
 }
 
-@Composable
-fun ParallelogramShape(color: Color) {
-    Canvas(modifier = Modifier.size(35.dp, 25.dp)) {
-        val path = Path().apply {
-            moveTo(0f, size.height)   // Bottom-left
-            lineTo(size.width * 0.65f, size.height)  // Bottom-right
-            lineTo(size.width, 0f)    // Top-right
-            lineTo(size.width * 0.35f, 0f) // Top-left
-            close()
-        }
-
-        drawPath(
-            path = path,
-            color = color
-        )
-    }
-}

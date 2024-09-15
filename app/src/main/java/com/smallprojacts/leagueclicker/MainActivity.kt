@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.presentation.views.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.RegisterView
+import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +38,7 @@ fun NavigationComponent(navController: NavHostController) {
         startDestination = "login_view" // Starting screen
     ) {
         composable("login_view") {
-            LoginView(navController)
+            AllChampScreen(navController =  navController)
         }
         composable("register_view") {
             RegisterView(navController)
