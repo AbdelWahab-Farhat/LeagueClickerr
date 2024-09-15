@@ -38,7 +38,7 @@ fun NavigationComponent(navController: NavHostController) {
         startDestination = "login_view" // Starting screen
     ) {
         composable("login_view") {
-            AllChampScreen(navController =  navController)
+            LoginView(navController =  navController)
         }
         composable("register_view") {
             RegisterView(navController)
