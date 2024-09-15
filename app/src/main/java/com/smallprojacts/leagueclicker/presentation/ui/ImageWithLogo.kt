@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.smallprojacts.leagueclicker.R
 
 
-// Later we will add Image Parameter
 @Composable
 fun ImageWithLogo(imageid : Int = R.drawable.logowhite) {
     Box(modifier = Modifier.fillMaxWidth()) {
