@@ -45,4 +45,3 @@ fun NavigationComponent(navController: NavHostController) {
         // add more screen here
     }
 }
-
