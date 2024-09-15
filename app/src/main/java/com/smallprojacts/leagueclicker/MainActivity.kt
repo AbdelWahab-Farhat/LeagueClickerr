@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.presentation.views.LoginView
+import com.smallprojacts.leagueclicker.presentation.views.RegisterView
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,12 +21,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LeagueClickerTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize()
-                ) {it
                     val navController = rememberNavController()
                     NavigationComponent(navController)
-                }
+
             }
         }
     }
@@ -40,6 +38,9 @@ fun NavigationComponent(navController: NavHostController) {
     ) {
         composable("login_view") {
             LoginView(navController)
+        }
+        composable("register_view") {
+            RegisterView(navController)
         }
         // add more screen here
     }
