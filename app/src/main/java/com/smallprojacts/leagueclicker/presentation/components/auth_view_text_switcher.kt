@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AuthViewsTextSwitcher(onClick: () -> Unit) {
+fun AuthViewsTextSwitcher(text:String  , clickedText:String ,onClick: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            "Don't have an account?",
+            text,
             color = Color(0xffF3F2F3),
             fontSize = 18.sp
         )
@@ -31,7 +31,7 @@ fun AuthViewsTextSwitcher(onClick: () -> Unit) {
         Spacer(modifier = Modifier.width(5.dp))
 
         Text(
-            text = "Sign Up!",
+            text = clickedText,
             color = Color(0xffF3F2F3),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,

@@ -55,7 +55,13 @@ fun LoginView(navController: NavHostController) {
             // TODO: COMPLETE LOGIN LOGIC BUTTON
             CustomButton(onClick = {}, title = "Login")
             Spacer(modifier = Modifier.height(40.dp))
-            AuthViewsTextSwitcher(onClick = {})
+            AuthViewsTextSwitcher(
+                text = "Don't have an account?",
+                clickedText = "Sign Up!",
+                onClick = {
+                    navController.navigate("register_view")
+                }
+            )
             Spacer(modifier = Modifier.height(20.dp))
         }
 

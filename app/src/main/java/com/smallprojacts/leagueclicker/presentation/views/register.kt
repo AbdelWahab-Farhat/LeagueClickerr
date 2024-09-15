@@ -24,8 +24,7 @@ import com.smallprojacts.leagueclicker.presentation.components.CustomButton
 import com.smallprojacts.leagueclicker.presentation.components.CustomTextField
 import com.smallprojacts.leagueclicker.presentation.components.ImageWithLogo
 import com.smallprojacts.leagueclicker.presentation.components.AuthViewsTextSwitcher
-import com.smallprojacts.leagueclicker.presentation.components.ForgetPasswordButton
-import androidx.compose.material3.Scaffold
+
 
 @Composable
 fun RegisterView(navController: NavHostController) {
@@ -40,7 +39,7 @@ fun RegisterView(navController: NavHostController) {
                     )
                 )
         ) {
-            ImageWithLogo(R.drawable.someone)
+            ImageWithLogo(R.drawable.someone2)
             Column(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier
@@ -60,7 +59,10 @@ fun RegisterView(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(30.dp))
                 CustomButton(onClick = {}, title = "Register")
                 Spacer(modifier = Modifier.height(20.dp))
-                AuthViewsTextSwitcher(onClick = {
+                AuthViewsTextSwitcher(
+                    text = "Have an account?",
+                    clickedText = "Sign in",
+                    onClick = {
                     navController.navigate("login_view")
                 })
                 Spacer(modifier = Modifier.height(20.dp))
