@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,26 +17,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.smallprojacts.leagueclicker.presentation.components.CustomTextField
+import com.smallprojacts.leagueclicker.presentation.components.ImageWithLogo
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,105 +50,81 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-
 @Composable
-fun CustomTextField() {
-    // Define your fill color with opacity
-    val fillColor = Color(0xFFB3E5FC).copy(alpha = 0.2f) // Light Blue color with 20% opacity
-
-    // State to manage the text input
-    var text by remember { mutableStateOf("") }
-
-    TextField(
-        text, { newText -> newText.also { text = it } }, Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp)),
-        // Update state when text changes
-        // Apply rounded corners
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = fillColor,
-            focusedIndicatorColor = Color.Transparent, // Remove focus indicator
-            unfocusedIndicatorColor = Color.Transparent,
-            unfocusedTextColor = Color.White,
-            focusedTextColor = Color.White
-        )
-    )
-}
-
-
-@Composable
-fun container (){
+fun container() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(Color(0xff091428), Color(0xff0A1428)),
-                    start = Offset.Zero,
-                    end = Offset.Infinite
+                    start = Offset(0f, 0f), // Top (0% Y-axis)
+                    end = Offset(0f, Float.POSITIVE_INFINITY) // Bottom (100% Y-axis)
                 )
             )
     ) {
-        ImageWithLogo()
-        Column (
+        ImageWithLogo(R.drawable.someone)
+        Column(
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = (-20).dp)
                 .padding(horizontal = 20.dp)
-        ){
-            Column {
-                Text(text = "Email", color = Color(0xffF3F2F3), fontSize = 23.sp)
-                Spacer(modifier = Modifier.height(8.dp))
-                CustomTextField()
-            }
+        ) {
+            CustomTextField(label = "Email")
             Spacer(modifier = Modifier.height(20.dp))
-            Column {
-                Text(text = "Password", color = Color(0xffF3F2F3), fontSize = 23.sp)
-                Spacer(modifier = Modifier.height(8.dp))
-                CustomTextField()
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Forgot Password?",
-                        color = Color(0xffF3F2F3),
-                        fontSize = 14.sp
-                    )
-                }
+            CustomTextField(label = "Password")
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Forgot Password ?",
+                    color = Color(0xffF3F2F3),
+                    fontSize = 15.sp
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 20.dp, vertical = 40.dp)
+        ) {
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .background(
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xff785A28),
+                                Color(0xC89B3C).copy(alpha = 0.7f)
+                            ),
+                            start = Offset(0f, 0f), // Top (0% Y-axis)
+                            end = Offset(0f, Float.POSITIVE_INFINITY) // Bottom (100% Y-axis)
+                        ),
+                        shape = RoundedCornerShape(8.dp) // Apply the shape directly to the button
+                    ),
+                shape = RoundedCornerShape(8.dp), // Ensure the shape matches the background
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent // Make the button's container color transparent
+                ),
+                contentPadding = PaddingValues(0.dp) // Remove default padding
+            ) {
+                Text(
+                    text = "dwadawd",
+                    color = Color(0xffF3F2F3),
+                    fontSize = 20.sp
+                )
             }
         }
     }
 }
 
-// Later we will add Image Parameter
-@Composable fun ImageWithLogo() {
-    Box(modifier = Modifier.fillMaxWidth()) {
-        Image(
-            painter = painterResource(id = R.drawable.someone), // Replace with your drawable resource ID
-            contentDescription = "Image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp),
-            contentScale = ContentScale.Crop
-        )
-    }
-    Box(
-        modifier = Modifier
-            .fillMaxSize() // Make the Box fill the available space
-            .offset(x = 7.dp, y = (-250).dp),
-        contentAlignment = Alignment.Center // Center content within the Box
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.logowhite),
-            contentDescription = "Image",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-    }
+@Composable
+fun CustomButton(title: String = "Click") {
+
 }
+
