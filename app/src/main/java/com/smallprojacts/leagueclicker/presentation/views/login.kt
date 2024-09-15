@@ -48,14 +48,21 @@ fun LoginView(navController: NavHostController) {
             Spacer(modifier = Modifier.height(340.dp))
             CustomTextField(label = "Email")
             Spacer(modifier = Modifier.height(20.dp))
-            CustomTextField(label = "Password")
+            CustomTextField(label = "Password", isPassword = true)
             Spacer(modifier = Modifier.height(8.dp))
             ForgetPasswordButton(onClick = {})
             Spacer(modifier = Modifier.height(50.dp))
             // TODO: COMPLETE LOGIN LOGIC BUTTON
             CustomButton(onClick = {}, title = "Login")
             Spacer(modifier = Modifier.height(40.dp))
-            AuthViewsTextSwitcher(onClick = {})
+            AuthViewsTextSwitcher(
+                text = "Don't have an account?",
+                clickedText = "Sign Up!",
+                onClick = {
+                    navController.navigate("register_view")
+                }
+            )
+            Spacer(modifier = Modifier.height(20.dp))
         }
 
     }
