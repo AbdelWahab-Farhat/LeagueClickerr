@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
 import com.smallprojacts.leagueclicker.presentation.components.AbilitySelector
 import com.smallprojacts.leagueclicker.presentation.components.ChampionDetailsPicture
+import com.smallprojacts.leagueclicker.presentation.components.CustomButton
 import com.smallprojacts.leagueclicker.presentation.components.CustomChampTopBar
 import com.smallprojacts.leagueclicker.presentation.components.StatMeterGrid
 
@@ -99,6 +100,10 @@ fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostControlle
 
                 }
                 AbilitySelector(modifier = modifier)
+
+                Box(modifier = modifier.padding(20.dp)) {
+                    CustomButton(onClick = {}, title = "Play")
+                }
             }
         }
     }

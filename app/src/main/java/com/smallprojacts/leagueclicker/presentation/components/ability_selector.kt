@@ -31,7 +31,7 @@ import com.smallprojacts.leagueclicker.R
 @Composable
 fun AbilitySelector(modifier: Modifier = Modifier) {
     LazyRow(
-        modifier = modifier,
+        modifier = modifier.padding(top = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(start = 20.dp)
@@ -172,7 +172,4 @@ fun AbilitySelector(modifier: Modifier = Modifier) {
                 )
             )
     ) { }
-    Box(modifier = modifier.padding(20.dp)) {
-        CustomButton(onClick = {}, title = "Play")
-    }
 }
