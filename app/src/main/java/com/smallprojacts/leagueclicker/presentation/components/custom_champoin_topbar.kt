@@ -25,7 +25,8 @@ fun CustomChampTopBar(modifier: Modifier = Modifier) {
             IconButton(onClick = { /* do something */ }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Go Back"
+                    contentDescription = "Go Back",
+                    tint = Color(0xffF3F2F3)
                 )
             }
         },
@@ -33,7 +34,8 @@ fun CustomChampTopBar(modifier: Modifier = Modifier) {
             IconButton(onClick = { /* do something */ }) {
                 Icon(
                     imageVector = Icons.Filled.Notifications,
-                    contentDescription = "Show 3d Model"
+                    contentDescription = "Show 3d Model",
+                    tint = Color(0xffF3F2F3)
                 )
             }
         },

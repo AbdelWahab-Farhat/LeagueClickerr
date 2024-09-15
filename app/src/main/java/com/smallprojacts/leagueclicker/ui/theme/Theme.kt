@@ -35,11 +35,12 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun LeagueClickerTheme(
-    darkTheme: Boolean = true,
+    darkTheme: Boolean = false,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
