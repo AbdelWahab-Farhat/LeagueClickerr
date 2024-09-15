@@ -1,4 +1,4 @@
-package com.smallprojacts.leagueclicker.presentation.views.search
+package com.smallprojacts.leagueclicker.presentation.views.my_champ
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +37,7 @@ import com.smallprojacts.leagueclicker.presentation.components.StatMeterGrid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()

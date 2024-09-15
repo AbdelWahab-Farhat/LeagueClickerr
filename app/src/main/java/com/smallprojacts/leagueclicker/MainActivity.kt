@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.presentation.views.LoginView
+import com.smallprojacts.leagueclicker.presentation.views.my_champ.MyChampScreen
 import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
@@ -38,7 +39,7 @@ fun NavigationComponent(navController: NavHostController) {
         startDestination = "login_view" // Starting screen
     ) {
         composable("login_view") {
-            SearchScreen(navController = navController)
+            MyChampScreen(navController = navController)
         }
         // add more screen here
     }
