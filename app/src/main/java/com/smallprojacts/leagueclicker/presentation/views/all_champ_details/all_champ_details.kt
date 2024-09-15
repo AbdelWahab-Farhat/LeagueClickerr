@@ -1,4 +1,4 @@
-package com.smallprojacts.leagueclicker.presentation.views.my_champ_details
+package com.smallprojacts.leagueclicker.presentation.views.all_champ_details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,13 +33,15 @@ import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
 import com.smallprojacts.leagueclicker.presentation.components.AbilitySelector
 import com.smallprojacts.leagueclicker.presentation.components.ChampionDetailsPicture
+import com.smallprojacts.leagueclicker.presentation.components.ClassAndDifficulty
 import com.smallprojacts.leagueclicker.presentation.components.CustomButton
 import com.smallprojacts.leagueclicker.presentation.components.CustomChampTopBar
+import com.smallprojacts.leagueclicker.presentation.components.DifficultyMeter
 import com.smallprojacts.leagueclicker.presentation.components.StatMeterGrid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun AllChampScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -67,16 +70,11 @@ fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostControlle
             )
 
             Column(
-                modifier = modifier
-                    .verticalScroll(rememberScrollState())
+                modifier = modifier.verticalScroll(rememberScrollState())
             ) {
 
                 ChampionDetailsPicture(
-                    modifier = modifier,
-                    "Ezreal",
-                    10,
-                    null,
-                    30000
+                    modifier = modifier, "Ezreal", null, "The Prodigal Explorer", null
                 )
 
                 Column(
@@ -85,15 +83,10 @@ fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostControlle
                         .padding(top = 20.dp),
                 ) {
                     Text(
-                        "Stats",
+                        "An adventurer, with a natural talent in the magical arts, he discovers buried catacombs and becomes involved with ancient curses.",
                         color = Color(0xffF3F2F3),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 16.sp
                     )
-
-                    Spacer(modifier = modifier.size(10.dp))
-
-                    StatMeterGrid(statMap = stats)
 
                     Spacer(modifier = modifier.size(30.dp))
 
@@ -107,8 +100,10 @@ fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostControlle
                 }
                 AbilitySelector(modifier = modifier)
 
+                ClassAndDifficulty(champClass = "Marksman", difficulty = 1)
+
                 Box(modifier = modifier.padding(20.dp)) {
-                    CustomButton(onClick = {}, title = "Play")
+                    CustomButton(onClick = {}, title = "Add Champion")
                 }
             }
         }

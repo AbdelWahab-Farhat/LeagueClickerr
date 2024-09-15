@@ -25,7 +25,13 @@ import androidx.compose.ui.unit.sp
 import com.smallprojacts.leagueclicker.R
 
 @Composable
-fun ChampionDetailsPicture(modifier: Modifier = Modifier) {
+fun ChampionDetailsPicture(
+    modifier: Modifier = Modifier,
+    name: String,
+    level: Int?,
+    title: String?,
+    numOfClicks: Int?
+) {
     Box(
         modifier = Modifier.size(height = 360.dp, width = 1000.dp)
     ) {
@@ -59,17 +65,20 @@ fun ChampionDetailsPicture(modifier: Modifier = Modifier) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        "Ezreal",
+                        name,
                         color = Color(0xffF3F2F3),
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Text(
-                        "lvl: 10",
-                        color = Color(0xffF3F2F3),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                    if (level != null) {
+                        Text(
+                            "lvl: $level",
+                            color = Color(0xffF3F2F3),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
                 }
                 Row(
                     modifier = modifier
@@ -78,11 +87,14 @@ fun ChampionDetailsPicture(modifier: Modifier = Modifier) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        "Number Of Clicks",
+                        title ?: "Number Of Clicks",
                         color = Color(0xDDF3F2F3),
                         fontSize = 20.sp
                     )
-                    Text("30,000", color = Color(0xDDF3F2F3), fontSize = 20.sp)
+
+                    if (numOfClicks != null) {
+                        Text(numOfClicks.toString(), color = Color(0xDDF3F2F3), fontSize = 20.sp)
+                    }
                 }
             }
         }
