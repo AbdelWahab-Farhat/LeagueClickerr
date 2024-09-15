@@ -1,8 +1,10 @@
 package com.smallprojacts.leagueclicker
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -12,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.presentation.views.LoginView
+import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,12 +23,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LeagueClickerTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize()
-                ) {it
-                    val navController = rememberNavController()
-                    NavigationComponent(navController)
-                }
+                val navController = rememberNavController()
+                NavigationComponent(navController)
             }
         }
     }
@@ -39,7 +38,7 @@ fun NavigationComponent(navController: NavHostController) {
         startDestination = "login_view" // Starting screen
     ) {
         composable("login_view") {
-            LoginView(navController)
+            SearchScreen(navController = navController)
         }
         // add more screen here
     }
