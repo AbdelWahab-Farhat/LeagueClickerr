@@ -15,6 +15,7 @@ import com.smallprojacts.leagueclicker.presentation.views.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.RegisterView
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampScreen
 import com.smallprojacts.leagueclicker.presentation.views.all_champs.AllChampView
+import com.smallprojacts.leagueclicker.presentation.views.my_all_champs.MyAllChampView
 import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampScreen
 import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LeagueClickerTheme {
+
                     val navController = rememberNavController()
                     NavigationComponent(navController)
 
@@ -38,7 +40,7 @@ class MainActivity : ComponentActivity() {
 fun NavigationComponent(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "all_champs" // Starting screen
+        startDestination = "my_all_champs" // Starting screen
     ) {
         composable("login_view") {
             LoginView(navController =  navController)
@@ -59,6 +61,9 @@ fun NavigationComponent(navController: NavHostController) {
         }
         composable("all_champs") {
             AllChampView(navController = navController)
+        }
+        composable("my_all_champs") {
+            MyAllChampView(navController = navController)
         }
         // add more screen here
     }
