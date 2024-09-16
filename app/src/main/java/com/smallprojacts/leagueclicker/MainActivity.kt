@@ -14,6 +14,9 @@ import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.presentation.views.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.RegisterView
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampScreen
+import com.smallprojacts.leagueclicker.presentation.views.all_champs.AllChampView
+import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampScreen
+import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,6 +45,20 @@ fun NavigationComponent(navController: NavHostController) {
         }
         composable("register_view") {
             RegisterView(navController)
+        }
+
+        composable("all_champ_detail") {
+            AllChampScreen(navController = navController)
+        }
+
+        composable("my_champ") {
+            MyChampScreen(navController = navController)
+        }
+        composable("search") {
+            SearchScreen(navController = navController)
+        }
+        composable("all_champs") {
+            AllChampView(navController = navController)
         }
         // add more screen here
     }
