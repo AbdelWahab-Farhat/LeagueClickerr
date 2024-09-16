@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -27,7 +31,10 @@ import androidx.compose.ui.unit.sp
 fun CustomTextField(
     label: String = "",
     spaceBetween: Int = 10,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    suffexicon:  @Composable() (() -> Unit)? = {},
+            placeholder:  @Composable() (() -> Unit)? = {}
+
 ) {
     val fillColor = Color(0xFFB3E5FC).copy(alpha = 0.2f)
     var text by remember { mutableStateOf("") }
@@ -49,7 +56,10 @@ fun CustomTextField(
                 focusedTextColor = Color.White
             ),
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-            singleLine = true
+            singleLine = true,
+            placeholder = placeholder,
+            suffix = suffexicon
         )
     }
 }
+
