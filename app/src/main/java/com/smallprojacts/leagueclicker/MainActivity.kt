@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
 fun NavigationComponent(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "login_view" // Starting screen
+        startDestination = "all_champs" // Starting screen
     ) {
         composable("login_view") {
             LoginView(navController =  navController)
