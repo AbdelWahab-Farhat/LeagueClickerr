@@ -22,16 +22,16 @@ import com.smallprojacts.leagueclicker.R
 
 // Later we will add Image Parameter
 @Composable
-fun ImageWithLogo(backgroundPhotoId:Int) {
+fun ImageWithLogo(backgroundPhotoId:Int , imageHeight:Int = 360 , logoPositionY:Int = 250, logoPositionX:Int = 7) {
     Box(
-        modifier = Modifier.size(height = 360.dp, width = 1000.dp)
+        modifier = Modifier.size(height = imageHeight.dp, width = 1000.dp)
     ) {
         Image(
             painter = painterResource(backgroundPhotoId),
             contentDescription = "Image",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(360.dp),
+                .height(imageHeight.dp),
             contentScale = ContentScale.Crop
         )
         Box(
@@ -49,8 +49,8 @@ fun ImageWithLogo(backgroundPhotoId:Int) {
     }
     Box(
         modifier = Modifier
-            .fillMaxSize() // Make the Box fill the available space
-            .offset(x = 7.dp, y = (-250).dp),
+            .fillMaxSize()
+            .offset(x = logoPositionX.dp, y = (-logoPositionY).dp),
         contentAlignment = Alignment.Center
     ) {
         Image(
