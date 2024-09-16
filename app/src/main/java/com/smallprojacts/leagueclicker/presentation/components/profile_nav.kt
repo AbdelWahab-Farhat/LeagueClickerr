@@ -33,7 +33,7 @@ fun ProfileNav(name: String = "Ace D Roger", imageId:Int = R.drawable.champ1) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp, 0.dp),
+  ,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row {
