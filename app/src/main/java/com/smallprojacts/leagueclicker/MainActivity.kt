@@ -1,12 +1,10 @@
 package com.smallprojacts.leagueclicker
+import com.smallprojacts.leagueclicker.presentation.views.SplashView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +21,6 @@ class MainActivity : ComponentActivity() {
             LeagueClickerTheme {
                     val navController = rememberNavController()
                     NavigationComponent(navController)
-
             }
         }
     }
@@ -34,13 +31,16 @@ class MainActivity : ComponentActivity() {
 fun NavigationComponent(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "login_view" // Starting screen
+        startDestination = "splash_view" // Starting screen
     ) {
         composable("login_view") {
             LoginView(navController)
         }
         composable("register_view") {
             RegisterView(navController)
+        }
+        composable("splash_view") {
+            SplashView(navController)
         }
         // add more screen here
     }
