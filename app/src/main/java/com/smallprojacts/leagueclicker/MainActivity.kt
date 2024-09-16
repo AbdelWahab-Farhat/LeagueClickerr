@@ -1,4 +1,5 @@
 package com.smallprojacts.leagueclicker
+import com.smallprojacts.leagueclicker.presentation.views.SplashView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,7 +27,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LeagueClickerTheme {
-
                     val navController = rememberNavController()
                     NavigationComponent(navController)
 
@@ -64,6 +64,9 @@ fun NavigationComponent(navController: NavHostController) {
         }
         composable("my_all_champs") {
             MyAllChampView(navController = navController)
+        }
+        composable("splash_view") {
+            SplashView(navController)
         }
         // add more screen here
     }
