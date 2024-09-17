@@ -1,5 +1,6 @@
 
-package com.smallprojacts.leagueclicker.presentation.views
+package com.smallprojacts.leagueclicker.presentation.views.login
+import android.util.Log.d
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -26,6 +31,8 @@ import com.smallprojacts.leagueclicker.presentation.components.ForgetPasswordBut
 
 @Composable
 fun LoginView(navController: NavHostController) {
+    var mutableEmailText by remember { mutableStateOf("") }
+    var mutablePasswordText by remember { mutableStateOf("") }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,14 +53,23 @@ fun LoginView(navController: NavHostController) {
                 .padding(horizontal = 20.dp).fillMaxSize()
         ) {
             Spacer(modifier = Modifier.height(340.dp))
-            CustomTextField(label = "Email")
+            CustomTextField(label = "Email", text = mutableEmailText,
+                onTextChanged = {
+                    mutableEmailText = it
+                }
+                )
             Spacer(modifier = Modifier.height(20.dp))
-            CustomTextField(label = "Password", isPassword = true)
+            CustomTextField(label = "Password", isPassword = true , text = mutablePasswordText, onTextChanged = {
+                mutablePasswordText = it
+            })
             Spacer(modifier = Modifier.height(8.dp))
             ForgetPasswordButton(onClick = {})
             Spacer(modifier = Modifier.height(50.dp))
             // TODO: COMPLETE LOGIN LOGIC BUTTON
-            CustomButton(onClick = {}, title = "Login")
+            CustomButton(onClick = {
+                d("TAG", "CustomTextField: $mutableEmailText")
+                d("TAG", "CustomTextField: $mutablePasswordText")
+            }, title = "Login")
             Spacer(modifier = Modifier.height(40.dp))
             AuthViewsTextSwitcher(
                 text = "Don't have an account?",

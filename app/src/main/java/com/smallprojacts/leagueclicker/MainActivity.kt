@@ -9,9 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.smallprojacts.leagueclicker.presentation.views.LoginView
-import com.smallprojacts.leagueclicker.presentation.views.RegisterView
-import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampScreen
+import com.smallprojacts.leagueclicker.presentation.views.login.LoginView
+import com.smallprojacts.leagueclicker.presentation.views.register.RegisterView
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
