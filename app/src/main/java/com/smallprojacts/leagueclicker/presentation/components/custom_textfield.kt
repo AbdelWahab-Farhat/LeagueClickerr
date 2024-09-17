@@ -29,9 +29,10 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
-    label: String = "",
+    label: String?,
     spaceBetween: Int = 10,
     isPassword: Boolean = false,
+    isEnabled: Boolean = true,
     suffexicon:  @Composable() (() -> Unit)? = {},
             placeholder:  @Composable() (() -> Unit)? = {}
 
@@ -40,9 +41,12 @@ fun CustomTextField(
     var text by remember { mutableStateOf("") }
 
     Column {
-        Text(text = label, color = Color(0xffF3F2F3), fontSize = 20.sp)
-        Spacer(modifier = Modifier.height(spaceBetween.dp))
+        if(label != null) {
+            Text(text = label, color = Color(0xffF3F2F3), fontSize = 20.sp)
+            Spacer(modifier = Modifier.height(spaceBetween.dp))
+        }
         TextField(
+            enabled = isEnabled,
             value = text,
             onValueChange = { newText -> text = newText },
             modifier = Modifier
