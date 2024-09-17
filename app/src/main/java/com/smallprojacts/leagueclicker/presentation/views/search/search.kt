@@ -12,9 +12,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
+import com.smallprojacts.leagueclicker.presentation.components.CustomTextField
 import com.smallprojacts.leagueclicker.presentation.components.StatMeterGrid
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,17 +64,63 @@ fun SearchScreen(modifier: Modifier = Modifier, navController: NavHostController
             modifier = modifier,
             containerColor = Color.Transparent,
             topBar = {
-                TopAppBar(
+                LargeTopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        Text("Small Top App Bar")
-                    }
+                        Box(modifier = modifier.fillMaxWidth().padding(start = 4.dp, end = 20.dp)) {
+                            CustomTextField(
+                                placeholder = {
+                                    Text(
+                                        text = "Search",
+                                        color = Color.White
+                                    )
+                                },
+                                suffexicon = {
+                                    Row {
+                                        Icon(
+                                            imageVector = Icons.Default.Search,
+                                            contentDescription = "Search Icon",
+                                            tint = Color.White,
+                                            modifier = Modifier.padding(end = 8.dp)
+                                        )
+                                        Icon(
+                                            imageVector = Icons.Default.MoreVert,
+                                            contentDescription = "Search Icon",
+                                            tint = Color.White,
+                                            modifier = Modifier.padding(end = 8.dp)
+                                        )
+                                    }
+                                }
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { /* do something */ }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Go Back",
+                                tint = Color(0xffF3F2F3)
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { /* do something */ }) {
+                            Icon(
+                                imageVector = Icons.Filled.Notifications,
+                                contentDescription = "Show 3d Model",
+                                tint = Color(0xffF3F2F3)
+                            )
+                        }
+                    },
                 )
             },
         ) { innerPadding ->
+            LazyColumn {
+
+            }
         }
     }
 }

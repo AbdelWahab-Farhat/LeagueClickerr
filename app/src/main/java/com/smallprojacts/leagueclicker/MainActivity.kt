@@ -1,22 +1,18 @@
 package com.smallprojacts.leagueclicker
-import com.smallprojacts.leagueclicker.presentation.views.SplashView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.presentation.views.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.RegisterView
+import com.smallprojacts.leagueclicker.presentation.views.SplashView
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampScreen
-import com.smallprojacts.leagueclicker.presentation.views.all_champs.AllChampView
-import com.smallprojacts.leagueclicker.presentation.views.my_all_champs.MyAllChampView
+import com.smallprojacts.leagueclicker.presentation.views.main_screen.MainScreen
 import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampScreen
 import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
@@ -40,7 +36,7 @@ class MainActivity : ComponentActivity() {
 fun NavigationComponent(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "my_all_champs" // Starting screen
+        startDestination = "search" // Starting screen
     ) {
         composable("login_view") {
             LoginView(navController =  navController)
@@ -53,17 +49,14 @@ fun NavigationComponent(navController: NavHostController) {
             AllChampScreen(navController = navController)
         }
 
-        composable("my_champ") {
+        composable("my_champ_detail") {
             MyChampScreen(navController = navController)
         }
         composable("search") {
             SearchScreen(navController = navController)
         }
-        composable("all_champs") {
-            AllChampView(navController = navController)
-        }
-        composable("my_all_champs") {
-            MyAllChampView(navController = navController)
+        composable("main_screen") {
+            MainScreen(navController = navController)
         }
         composable("splash_view") {
             SplashView(navController)

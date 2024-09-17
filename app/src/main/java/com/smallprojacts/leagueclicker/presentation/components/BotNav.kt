@@ -10,55 +10,92 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.twotone.Send
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.twotone.DateRange
+import androidx.compose.material.icons.twotone.Face
+import androidx.compose.material.icons.twotone.Favorite
+import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun BottomNavBar(selectedItem: String) {
-    Row(
+fun BottomNavBar(operation: (Int) -> Unit, selectItem: Int) {
+
+    val items = listOf("My Champs", "Home", "All Champs")
+
+    NavigationBar(
+        containerColor = Color(0xff0A1428),
+        tonalElevation = 0.dp,
         modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Transparent)
-            .padding(16.dp)
-            .padding(
-                bottom = WindowInsets.systemBars
-                    .asPaddingValues()
-                    .calculateBottomPadding()
-            ),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 10.dp)
+            .shadow(elevation = 10.dp)
     ) {
-        BottomNavItem(
-            icon = Icons.Outlined.Notifications,
-            contentDescription = "Notifications",
-            isSelected = selectedItem == "Notifications"
-        )
-        BottomNavItem(
-            icon = Icons.Outlined.Home,
-            contentDescription = "Home",
-            isSelected = selectedItem == "Home"
-        )
-        BottomNavItem(
-            icon = Icons.Default.MoreVert,
-            contentDescription = "Settings",
-            isSelected = selectedItem == "Settings"
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            items.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    icon = {
+                        when (item) {
+                            "My Champs" -> Icon(
+                                Icons.AutoMirrored.TwoTone.Send,
+                                contentDescription = item,
+                                tint = Color.White,
+                                modifier = Modifier.size(35.dp)
+                            )
+
+                            "All Champs" -> Icon(
+                                Icons.TwoTone.DateRange,
+                                contentDescription = item,
+                                tint = Color.White,
+                                modifier = Modifier.size(35.dp)
+                            )
+
+                            "Home" -> Icon(
+                                Icons.TwoTone.Home,
+                                contentDescription = item,
+                                tint = Color.White,
+                                modifier = Modifier.size(35.dp)
+                            )
+                        }
+                    },
+                    label = { Text(item, color = Color.White, fontSize = 16.sp) },
+                    selected = selectItem == index,
+                    onClick = { operation(index) },
+                    modifier = Modifier
+                        .padding(0.dp)
+                        .size(width = 140.dp, height = 50.dp),
+                )
+            }
+        }
     }
 }
 
