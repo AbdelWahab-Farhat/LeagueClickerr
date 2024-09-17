@@ -10,10 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -25,19 +21,22 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
+    text: String = "",              // Pass current text as a String
+    onTextChanged: (String) -> Unit = {},  // Callback to update the text
     label: String = "",
     spaceBetween: Int = 10,
     isPassword: Boolean = false
 ) {
     val fillColor = Color(0xFFB3E5FC).copy(alpha = 0.2f)
-    var text by remember { mutableStateOf("") }
 
     Column {
         Text(text = label, color = Color(0xffF3F2F3), fontSize = 20.sp)
         Spacer(modifier = Modifier.height(spaceBetween.dp))
         TextField(
             value = text,
-            onValueChange = { newText -> text = newText },
+            onValueChange = { newText ->
+                onTextChanged(newText)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp)),
