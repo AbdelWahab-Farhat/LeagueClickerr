@@ -15,11 +15,12 @@ ktorServerContentNegotiation = "2.2.1"
 lifecycleRuntimeKtx = "2.8.5"
 activityCompose = "1.9.2"
 composeBom = "2024.04.01"
-navigationCompose = "2.6.0"
 transportRuntime = "3.3.0"
 firebaseDataconnect = "16.0.0-alpha05"
 navigationCompose = "2.8.0"
 navigationRuntimeKtx = "2.8.0"
+navigationRuntimeKtxVersion = "2.8.0"
+navigationComposeVersion = "2.8.0"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager" }
@@ -54,6 +55,8 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktorServerContentNegotiation" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
 firebase-dataconnect = { group = "com.google.firebase", name = "firebase-dataconnect", version.ref = "firebaseDataconnect" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtxVersion" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

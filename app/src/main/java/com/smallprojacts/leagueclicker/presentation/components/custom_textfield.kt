@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 fun CustomTextField(
     text: String = "",              // Pass current text as a String
     onTextChanged: (String) -> Unit = {},  // Callback to update the text
-    label: String = "",
+    label: String?,
     spaceBetween: Int = 10,
     isPassword: Boolean = false,
     isEnabled: Boolean = true,
