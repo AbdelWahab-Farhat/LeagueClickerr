@@ -10,6 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -25,14 +29,21 @@ fun CustomTextField(
     onTextChanged: (String) -> Unit = {},  // Callback to update the text
     label: String = "",
     spaceBetween: Int = 10,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    isEnabled: Boolean = true,
+    suffexicon:  @Composable() (() -> Unit)? = {},
+            placeholder:  @Composable() (() -> Unit)? = {}
+
 ) {
     val fillColor = Color(0xFFB3E5FC).copy(alpha = 0.2f)
 
     Column {
-        Text(text = label, color = Color(0xffF3F2F3), fontSize = 20.sp)
-        Spacer(modifier = Modifier.height(spaceBetween.dp))
+        if(label != null) {
+            Text(text = label, color = Color(0xffF3F2F3), fontSize = 20.sp)
+            Spacer(modifier = Modifier.height(spaceBetween.dp))
+        }
         TextField(
+            enabled = isEnabled,
             value = text,
             onValueChange = { newText ->
                 onTextChanged(newText)
@@ -48,7 +59,9 @@ fun CustomTextField(
                 focusedTextColor = Color.White
             ),
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-            singleLine = true
+            singleLine = true,
+            placeholder = placeholder,
+            suffix = suffexicon
         )
     }
 }
