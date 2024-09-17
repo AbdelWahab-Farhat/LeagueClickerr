@@ -1,5 +1,6 @@
 package com.smallprojacts.leagueclicker.presentation.views.main_screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -28,7 +29,7 @@ import com.smallprojacts.leagueclicker.presentation.views.my_all_champs.MyAllCha
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     val scope = rememberCoroutineScope()
