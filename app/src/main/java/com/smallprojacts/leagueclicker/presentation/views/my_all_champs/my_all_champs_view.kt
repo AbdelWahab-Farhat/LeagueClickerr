@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,26 +22,26 @@ import com.smallprojacts.leagueclicker.presentation.components.ChampionGrid
 import com.smallprojacts.leagueclicker.presentation.components.RandomChampSpotLight
 
 @Composable
-fun MyAllChampView(modifier: Modifier = Modifier, navController: NavHostController, innerPadding: PaddingValues) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(innerPadding)
-            .padding(20.dp, 0.dp)
-    ) {
-        val stats = mapOf(
-            "Strength" to 1,
-            "Intelligence" to 5,
-            "Speed" to 3,
-            "Health" to 2,
-            "Attack Damage" to 4,
-            "safas" to 1,
-            ";kga" to 1,
-            "p9ipwt" to 1,
-            "gkasg;" to 1,
-            "ask" to 1,
-        )
-
+fun MyAllChampView(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    innerPadding: PaddingValues
+) {
+    val stats = mapOf(
+        "Strength" to 1,
+        "Intelligence" to 5,
+        "Speed" to 3,
+        "Health" to 2,
+        "Attack Damage" to 4,
+        "safas" to 1,
+        ";kga" to 1,
+        "p9ipwt" to 1,
+        "gkasg;" to 1,
+        "ask" to 1,
+    )
+    ChampionGrid(
+        modifier = Modifier.padding(innerPadding).padding(horizontal = 20.dp),
+        champs = stats, header = {
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
@@ -62,7 +63,6 @@ fun MyAllChampView(modifier: Modifier = Modifier, navController: NavHostControll
         )
 
         Spacer(modifier = Modifier.height(15.dp))
-
-        ChampionGrid(champs =  stats)
     }
+    )
 }

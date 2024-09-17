@@ -1,7 +1,6 @@
 package com.smallprojacts.leagueclicker.presentation.views.main_screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -33,58 +32,53 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     val scope = rememberCoroutineScope()
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color(0xff091428), Color(0xff0A1428)),
-                    start = Offset(0f, 0f),
-                    end = Offset(0f, Float.POSITIVE_INFINITY)
-                )
-            )
-    ) {
-        val pagerState = rememberPagerState(pageCount = { 3 })
-        var selectedItem by remember { mutableIntStateOf(0) }
+    val pagerState = rememberPagerState(pageCount = { 3 })
+    var selectedItem by remember { mutableIntStateOf(0) }
 
-        Scaffold(
-            modifier = modifier,
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color(0xff0A1428),
-                        titleContentColor = MaterialTheme.colorScheme.primary,
-                    ),
-                    title = { ProfileNav() }
-                )
-            },
-            bottomBar = {
-                BottomNavBar(
-                    { index ->
-                        selectedItem = index
-                        scope.launch{ pagerState.animateScrollToPage(index) }
-                    },
-                    selectedItem
-                )
-            },
+    Scaffold(
+        modifier = modifier.background(
+            brush = Brush.linearGradient(
+                colors = listOf(Color(0xff091428), Color(0xff0A1428)),
+                start = Offset(0f, 0f),
+                end = Offset(0f, Float.POSITIVE_INFINITY)
+            )
+        ),
+        containerColor = Color.Transparent,
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xff0A1428),
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = { ProfileNav() }
+            )
+        },
+        bottomBar = {
+            BottomNavBar(
+                { index ->
+                    selectedItem = index
+                    scope.launch { pagerState.animateScrollToPage(index) }
+                },
+                selectedItem
+            )
+        },
 
         ) { innerPadding ->
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { page ->
-                when (page) {
-                    0 -> MyAllChampView(navController = navController, innerPadding = innerPadding)
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            when (page) {
+                0 -> MyAllChampView(navController = navController, innerPadding = innerPadding)
 //                    1 -> Home()
-                    2 -> AllChampView(navController = navController, innerPadding = innerPadding)
-                }
+                2 -> AllChampView(navController = navController, innerPadding = innerPadding)
             }
+        }
 
-            LaunchedEffect(pagerState.currentPage) {
-                selectedItem = pagerState.currentPage
-            }
+        LaunchedEffect(pagerState.currentPage) {
+            selectedItem = pagerState.currentPage
         }
     }
 }
+
 

@@ -34,81 +34,79 @@ fun AllChampView(
     navController: NavHostController,
     innerPadding: PaddingValues
 ) {
-    Column(
+    val stats = mapOf(
+        "Strength" to 1,
+        "Intelligence" to 5,
+        "Speed" to 3,
+        "Health" to 2,
+        "Attack Damage" to 4,
+        "safas" to 1,
+        ";kga" to 1,
+        "p9ipwt" to 1,
+        "gkasg;" to 1,
+        "ask" to 1,
+    )
+    ChampionGrid(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .padding(innerPadding)
-            .padding(16.dp, 0.dp)
-    ) {
-        val stats = mapOf(
-            "Strength" to 1,
-            "Intelligence" to 5,
-            "Speed" to 3,
-            "Health" to 2,
-            "Attack Damage" to 4,
-            "safas" to 1,
-            ";kga" to 1,
-            "p9ipwt" to 1,
-            "gkasg;" to 1,
-            "ask" to 1,
-        )
+            .padding(horizontal = 20.dp),
+        champs = stats,
+        header = {
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Box(
-            modifier = modifier.clickable {  }
-        ) {
-            CustomTextField(
-                isEnabled = false,
-                label = null,
-                placeholder = {
-                    Text(
-                        text = "Search",
-                        color = Color.White
-                    )
-                },
-                suffexicon =
-                {
-                    Row {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search Icon",
-                            tint = Color.White,
-                            modifier = Modifier.padding(end = 8.dp)
+            Box(
+                modifier = modifier.clickable { }
+            ) {
+                CustomTextField(
+                    isEnabled = false,
+                    label = null,
+                    placeholder = {
+                        Text(
+                            text = "Search",
+                            color = Color(0xffF3F2F3)
                         )
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = "Search Icon",
-                            tint = Color.White,
-                            modifier = Modifier.padding(end = 8.dp)
-                        )
+                    },
+                    suffexicon =
+                    {
+                        Row {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search Icon",
+                                tint = Color(0xffF3F2F3),
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = "Search Icon",
+                                tint = Color(0xffF3F2F3),
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                        }
                     }
-                }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                text = "Runeterra",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xffF3F2F3)
             )
+
+            RuneterraRegions(modifier)
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                text = "Champions",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xffF3F2F3)
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
         }
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = "Runeterra",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-
-        RuneterraRegions(modifier)
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = "Champions",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        ChampionGrid(champs =  stats)
-    }
+    )
 }

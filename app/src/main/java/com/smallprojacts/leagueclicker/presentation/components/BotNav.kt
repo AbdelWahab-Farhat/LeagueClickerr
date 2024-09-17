@@ -54,7 +54,6 @@ fun BottomNavBar(operation: (Int) -> Unit, selectItem: Int) {
         containerColor = Color(0xff0A1428),
         tonalElevation = 0.dp,
         modifier = Modifier
-            .padding(horizontal = 10.dp)
             .shadow(elevation = 10.dp)
     ) {
         Row(
