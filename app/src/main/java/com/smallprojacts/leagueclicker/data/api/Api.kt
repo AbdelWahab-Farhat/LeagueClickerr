@@ -20,6 +20,7 @@ import kotlinx.serialization.json.Json
 
 
 class NetworkService  {
+    val PORT = 3003;
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true }) // Configure JSON serialization
@@ -27,25 +28,49 @@ class NetworkService  {
     }
 
 
-    suspend fun registerUser(username: String, email: String, password: String) {
-        val response = client.post("http://192.168.1.98:8080/api/register") {
-
+    suspend fun registerUser(username: String, email: String, password: String):Int {
+        val response = client.post("http://192.168.1.98:$PORT/api/register") {
             contentType(ContentType.Application.Json)
             setBody(RegisterRequest(username, email, password,password))
         }
-        when (response.status.value) {
+        return when (response.status.value) {
             201 , 200 -> {
-                // Successfully registered
-                Log.d("eee", "Successfully registered user: ${response.status}")
+                1;
             }
+
             else -> {
-                // Handle error
-                Log.d("eee", "error: ${response.bodyAsText()}")
-                Log.d("eee", "Failed to register user: ${response.status}")}
+                0;
+            }
+        }
+    }
+    suspend fun loginUser(email: String, password: String): Int {
+        return try {
+            val response = client.post("http://192.168.1.98:$PORT/api/login") {
+                contentType(ContentType.Application.Json)
+                setBody(LoginRequest(email, password))
+            }
+
+            Log.d("NetworkService", "Login response: ${response.status.value}")
+
+            when (response.status) {
+                HttpStatusCode.OK, HttpStatusCode.Created -> {
+                    1
+                }
+                else -> {
+                    Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
+                    0
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("NetworkService", "Error logging in: ${e.message}")
+            0
         }
     }
 
     @Serializable
     data class RegisterRequest(val name: String, val email: String, val password: String, val password_confirmation: String)
+
+    @Serializable
+    data class LoginRequest(val email: String, val password: String)
 
 }
