@@ -49,7 +49,6 @@ fun ChampionGrid(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalArrangement = Arrangement.spacedBy(15.dp),
-
 //        contentPadding = PaddingValues(18.dp),
     ) {
         item(span = { GridItemSpan(itemsPerRow) }) {
