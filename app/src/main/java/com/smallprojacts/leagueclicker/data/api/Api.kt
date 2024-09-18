@@ -43,23 +43,34 @@ class NetworkService  {
             }
         }
     }
-    suspend fun loginUser(email: String, password: String):Int {
-        val response = client.post("http://192.168.1.98:$PORT/api/login") {
-            contentType(ContentType.Application.Json)
-            setBody(LoginRequest(email, password))
-        }
-        return when (response.status.value) {
-            201 , 200 -> {
-                1;
+    suspend fun loginUser(email: String, password: String): Int {
+        return try {
+            val response = client.post("http://192.168.1.98:$PORT/api/login") {
+                contentType(ContentType.Application.Json)
+                setBody(LoginRequest(email, password))
             }
-            else -> {
-                0;
+
+            Log.d("NetworkService", "Login response: ${response.status.value}")
+
+            when (response.status) {
+                HttpStatusCode.OK, HttpStatusCode.Created -> {
+                    1
+                }
+                else -> {
+                    Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
+                    0
+                }
             }
+        } catch (e: Exception) {
+            Log.e("NetworkService", "Error logging in: ${e.message}")
+            0
         }
     }
 
     @Serializable
     data class RegisterRequest(val name: String, val email: String, val password: String, val password_confirmation: String)
+
+    @Serializable
     data class LoginRequest(val email: String, val password: String)
 
 }
