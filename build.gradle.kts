@@ -2,5 +2,10 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0" apply false // Plugin for Kotlin serialization
+}
+
+subprojects {
+    // Apply the Kotlin serialization plugin to all subprojects (like your app module)
+    plugins.apply("org.jetbrains.kotlin.plugin.serialization")
 }
