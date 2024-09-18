@@ -90,11 +90,18 @@ fun RegisterView(navController: NavHostController) {
                 if (mutableEmailText != "" && mutablePasswordText != "" && mutableUsernameText != "" && mutablePasswordText == mutableConfirmPasswordText) {
                     coroutineScope.launch {
                         try {
-                            NetworkService().registerUser(
+                            val value = NetworkService().registerUser(
                                 mutableUsernameText,
                                 mutableEmailText,
                                 mutablePasswordText
                             )
+                            if (value == 1) {
+                                snackbarHostState.showSnackbar("Registration Successfully")
+                                navController.navigate("login_view")
+                            }
+                            else {
+                                snackbarHostState.showSnackbar("Registration failed: User already exists")
+                            }
                         } catch (e: Exception) {
                             println("Registration failed: ${e.message}")
                             snackbarHostState.showSnackbar("Registration failed: ${e.message}")
