@@ -1,6 +1,8 @@
 package com.smallprojacts.leagueclicker.data.api
 
+import TokenManager
 import android.util.Log
+import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
@@ -8,12 +10,16 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 
 class NetworkService  {
 
 
     suspend fun registerUser(username: String, email: String, password: String):Int {
+
         val response = ClientConfig.client.post(RemoteRoutes.REGISTER) {
             contentType(ContentType.Application.Json)
             setBody(RegisterRequest(username, email, password,password))
@@ -29,8 +35,8 @@ class NetworkService  {
             }
         }
     }
-    suspend fun loginUser(email: String, password: String): Int {
-        return try {
+    suspend fun loginUser(email: String, password: String) {
+         try {
             val response = ClientConfig.client.post(RemoteRoutes.LOGIN) {
                 contentType(ContentType.Application.Json)
                 setBody(LoginRequest(email, password))
@@ -40,17 +46,22 @@ class NetworkService  {
 
             when (response.status) {
                 HttpStatusCode.OK, HttpStatusCode.Created -> {
+                    val jsonResponse = Json.parseToJsonElement(response.body()).jsonObject
+                    val token = jsonResponse["token"]?.jsonPrimitive?.content
+                    if (token != null) {
+                        TokenManager.saveToken(token)
+                    }
                     Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
-                    1
+
                 }
                 else -> {
                     Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
-                    0
+
                 }
             }
         } catch (e: Exception) {
             Log.e("NetworkService", "Error logging in: ${e.message}")
-            0
+
         }
     }
 
