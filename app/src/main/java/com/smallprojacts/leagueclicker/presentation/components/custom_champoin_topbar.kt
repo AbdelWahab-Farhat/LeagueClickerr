@@ -13,10 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomChampTopBar(modifier: Modifier = Modifier) {
+fun CustomChampTopBar(modifier: Modifier = Modifier, navController: NavController) {
     TopAppBar(
         modifier = modifier.padding(horizontal = 4.dp),
         colors = TopAppBarDefaults.topAppBarColors(
@@ -25,7 +26,7 @@ fun CustomChampTopBar(modifier: Modifier = Modifier) {
         ),
         title = {},
         navigationIcon = {
-            IconButton(onClick = { /* do something */ }) {
+            IconButton(onClick = navController::popBackStack ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Go Back",

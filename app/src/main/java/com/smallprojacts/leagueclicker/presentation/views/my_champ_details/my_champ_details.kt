@@ -54,7 +54,7 @@ fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostControlle
             modifier = modifier,
             containerColor = Color.Transparent,
             topBar = {
-                CustomChampTopBar()
+                CustomChampTopBar(navController = navController)
             },
         ) { innerPadding ->
             val stats = mapOf(
