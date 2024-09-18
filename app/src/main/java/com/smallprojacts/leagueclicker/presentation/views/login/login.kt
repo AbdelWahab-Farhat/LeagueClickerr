@@ -1,5 +1,5 @@
-
 package com.smallprojacts.leagueclicker.presentation.views.login
+
 import android.util.Log.d
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,12 +33,15 @@ import com.smallprojacts.leagueclicker.presentation.components.CustomTextField
 import com.smallprojacts.leagueclicker.presentation.components.ImageWithLogo
 import com.smallprojacts.leagueclicker.presentation.components.AuthViewsTextSwitcher
 import com.smallprojacts.leagueclicker.presentation.components.ForgetPasswordButton
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginView(navController: NavHostController) {
     var mutableEmailText by remember { mutableStateOf("") }
     var mutablePasswordText by remember { mutableStateOf("") }
+    var showSnackbar by remember { mutableStateOf(false) } // Snackbar visibility state
+    var snackbarMessage by remember { mutableStateOf("") } // Snackbar message state
     val coroutineScope = rememberCoroutineScope()
 
     Box(
@@ -78,17 +84,23 @@ fun LoginView(navController: NavHostController) {
 
             CustomButton(onClick = {
                 coroutineScope.launch {
-                    val value = NetworkService().loginUser(mutableEmailText, mutablePasswordText)
-                    if (value == 1) {
+                    val loginResult = NetworkService().loginUser(mutableEmailText, mutablePasswordText)
+                    if (loginResult == 1) {
+                        // Successful login
                         navController.navigate("main_screen") {
                             popUpTo(navController.graph.startDestinationId) {
                                 inclusive = true
                             }
                             launchSingleTop = true
                         }
+                        snackbarMessage = "Login successful!"
                     } else {
+                        // Failed login
                         d("LoginView", "Login failed. Please check your credentials.")
+                        snackbarMessage = "Login failed. Please check your credentials."
                     }
+                    // Show snackbar
+                    showSnackbar = true
                 }
             }, title = "Login")
 
@@ -103,6 +115,38 @@ fun LoginView(navController: NavHostController) {
             )
 
             Spacer(modifier = Modifier.height(20.dp))
+        }
+        if (showSnackbar) {
+            CustomSnackbar(
+                message = snackbarMessage,
+                onDismiss = {
+                    showSnackbar = false
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun CustomSnackbar(
+    message: String,
+    onDismiss: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Snackbar(
+            containerColor = Color.Black,
+            content = {
+                Text(message, color = Color.White)
+            }
+        )
+
+        // Automatically dismiss the snackbar after 3 seconds
+        LaunchedEffect(Unit) {
+            delay(3000)
+            onDismiss()
         }
     }
 }
