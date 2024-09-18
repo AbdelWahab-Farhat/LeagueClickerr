@@ -1,16 +1,20 @@
-
 package com.smallprojacts.leagueclicker.presentation.views.login
-import android.util.Log.d
+
+import TokenManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,17 +29,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
 import com.smallprojacts.leagueclicker.data.api.NetworkService
+import com.smallprojacts.leagueclicker.presentation.components.AuthViewsTextSwitcher
 import com.smallprojacts.leagueclicker.presentation.components.CustomButton
 import com.smallprojacts.leagueclicker.presentation.components.CustomTextField
-import com.smallprojacts.leagueclicker.presentation.components.ImageWithLogo
-import com.smallprojacts.leagueclicker.presentation.components.AuthViewsTextSwitcher
 import com.smallprojacts.leagueclicker.presentation.components.ForgetPasswordButton
+import com.smallprojacts.leagueclicker.presentation.components.ImageWithLogo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginView(navController: NavHostController) {
     var mutableEmailText by remember { mutableStateOf("") }
     var mutablePasswordText by remember { mutableStateOf("") }
+    var showSnackbar by remember { mutableStateOf(false) }
+    var snackbarMessage by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
 
     Box(
@@ -44,8 +51,8 @@ fun LoginView(navController: NavHostController) {
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(Color(0xff091428), Color(0xff0A1428)),
-                    start = Offset(0f, 0f), // Top (0% Y-axis)
-                    end = Offset(0f, Float.POSITIVE_INFINITY) // Bottom (100% Y-axis)
+                    start = Offset(0f, 0f),
+                    end = Offset(0f, Float.POSITIVE_INFINITY)
                 )
             )
     ) {
@@ -78,19 +85,19 @@ fun LoginView(navController: NavHostController) {
 
             CustomButton(onClick = {
                 coroutineScope.launch {
-                    val value = NetworkService().loginUser(mutableEmailText, mutablePasswordText)
-                    if (value == 1) {
-                        // Navigate to main screen and remove the login screen from backstack
+                     NetworkService().loginUser(mutableEmailText, mutablePasswordText)
+                    if (TokenManager.getToken() != null) {
                         navController.navigate("main_screen") {
                             popUpTo(navController.graph.startDestinationId) {
                                 inclusive = true
                             }
                             launchSingleTop = true
                         }
+                        snackbarMessage = "Login successful!"
                     } else {
-                        // Handle login failure, show an error or snack bar
-                        d("LoginView", "Login failed. Please check your credentials.")
+                        snackbarMessage = "Login failed. Please check your credentials."
                     }
+                    showSnackbar = true
                 }
             }, title = "Login")
 
@@ -106,5 +113,42 @@ fun LoginView(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(20.dp))
         }
+
+        if (showSnackbar) {
+            CustomSnackbar(
+                message = snackbarMessage,
+                onDismiss = {
+                    showSnackbar = false
+                }
+            )
+        }
     }
 }
+@Composable
+fun CustomSnackbar(
+    message: String,
+    onDismiss: () -> Unit
+) {
+    Box(
+        contentAlignment = Alignment.BottomCenter,
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Snackbar(
+            containerColor = Color.Black,
+            content = {
+                Text(message, color = Color.White)
+            },
+            action = {
+                // Optionally add an action button
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        LaunchedEffect(Unit) {
+            delay(3000) // Automatically dismiss after 3 seconds
+            onDismiss()
+        }
+    }
+}
+

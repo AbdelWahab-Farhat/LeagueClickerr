@@ -1,51 +1,43 @@
 package com.smallprojacts.leagueclicker.data.api
 
-import android.os.Parcel
-import android.os.Parcelable
+import TokenManager
 import android.util.Log
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.headers
+import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
-import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 
 class NetworkService  {
-    val PORT = 3003;
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true }) // Configure JSON serialization
-        }
-    }
 
 
     suspend fun registerUser(username: String, email: String, password: String):Int {
-        val response = client.post("http://192.168.1.98:$PORT/api/register") {
+
+        val response = ClientConfig.client.post(RemoteRoutes.REGISTER) {
             contentType(ContentType.Application.Json)
             setBody(RegisterRequest(username, email, password,password))
         }
         return when (response.status.value) {
             201 , 200 -> {
-                1;
+                1
             }
 
             else -> {
-                0;
+                Log.d("NetworkService", "Register success: ${response.bodyAsText()}")
+                0
             }
         }
     }
-    suspend fun loginUser(email: String, password: String): Int {
-        return try {
-            val response = client.post("http://192.168.1.98:$PORT/api/login") {
+    suspend fun loginUser(email: String, password: String) {
+         try {
+            val response = ClientConfig.client.post(RemoteRoutes.LOGIN) {
                 contentType(ContentType.Application.Json)
                 setBody(LoginRequest(email, password))
             }
@@ -54,21 +46,30 @@ class NetworkService  {
 
             when (response.status) {
                 HttpStatusCode.OK, HttpStatusCode.Created -> {
-                    1
+                    val jsonResponse = Json.parseToJsonElement(response.body()).jsonObject
+                    val token = jsonResponse["token"]?.jsonPrimitive?.content
+                    if (token != null) {
+                        TokenManager.saveToken(token)
+                    }
+                    Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
+
                 }
                 else -> {
                     Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
-                    0
+
                 }
             }
         } catch (e: Exception) {
             Log.e("NetworkService", "Error logging in: ${e.message}")
-            0
+
         }
     }
 
     @Serializable
-    data class RegisterRequest(val name: String, val email: String, val password: String, val password_confirmation: String)
+    data class RegisterRequest(val name: String,
+                               val email: String,
+                               val password: String,
+                               val password_confirmation: String)
 
     @Serializable
     data class LoginRequest(val email: String, val password: String)
