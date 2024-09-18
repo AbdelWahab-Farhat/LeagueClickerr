@@ -1,35 +1,20 @@
 package com.smallprojacts.leagueclicker.data.api
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
-import io.ktor.client.utils.EmptyContent.headers
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 
 class NetworkService  {
-    val PORT = 3003;
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true }) // Configure JSON serialization
-        }
-    }
 
 
     suspend fun registerUser(username: String, email: String, password: String):Int {
-        val response = client.post("http://192.168.1.98:$PORT/api/register") {
+        val response = ClientConfig.client.post(RemoteRoutes.REGISTER) {
             contentType(ContentType.Application.Json)
             setBody(RegisterRequest(username, email, password,password))
         }
@@ -39,13 +24,14 @@ class NetworkService  {
             }
 
             else -> {
+                Log.d("NetworkService", "Register success: ${response.bodyAsText()}")
                 0;
             }
         }
     }
     suspend fun loginUser(email: String, password: String): Int {
         return try {
-            val response = client.post("http://192.168.1.98:$PORT/api/login") {
+            val response = ClientConfig.client.post(RemoteRoutes.LOGIN) {
                 contentType(ContentType.Application.Json)
                 setBody(LoginRequest(email, password))
             }
@@ -54,6 +40,7 @@ class NetworkService  {
 
             when (response.status) {
                 HttpStatusCode.OK, HttpStatusCode.Created -> {
+                    Log.d("NetworkService", "Login failed: ${response.bodyAsText()}")
                     1
                 }
                 else -> {
@@ -68,7 +55,10 @@ class NetworkService  {
     }
 
     @Serializable
-    data class RegisterRequest(val name: String, val email: String, val password: String, val password_confirmation: String)
+    data class RegisterRequest(val name: String,
+                               val email: String,
+                               val password: String,
+                               val password_confirmation: String)
 
     @Serializable
     data class LoginRequest(val email: String, val password: String)
