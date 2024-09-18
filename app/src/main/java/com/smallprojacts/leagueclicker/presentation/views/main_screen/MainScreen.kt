@@ -24,8 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.presentation.components.BottomNavBar
 import com.smallprojacts.leagueclicker.presentation.components.ProfileNav
-import com.smallprojacts.leagueclicker.presentation.views.all_champs.AllChampView
-import com.smallprojacts.leagueclicker.presentation.views.my_all_champs.MyAllChampView
+import com.smallprojacts.leagueclicker.presentation.views.all_champs.AllChampPage
+import com.smallprojacts.leagueclicker.presentation.views.homepage.HomePage
+import com.smallprojacts.leagueclicker.presentation.views.my_all_champs.MyChampPage
 import kotlinx.coroutines.launch
 
 
@@ -33,8 +34,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = { 3 })
-    var selectedItem by remember { mutableIntStateOf(0) }
+    val pagerState = rememberPagerState(pageCount = { 3 }, initialPage = 1)
+    var selectedItem by remember { mutableIntStateOf(1) }
 
     Scaffold(
         modifier = modifier.background(
@@ -70,9 +71,9 @@ fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) 
             modifier = Modifier.fillMaxSize()
         ) { page ->
             when (page) {
-                0 -> MyAllChampView(navController = navController, innerPadding = innerPadding)
-//                    1 -> Home()
-                2 -> AllChampView(navController = navController, innerPadding = innerPadding)
+                0 -> MyChampPage(navController = navController, innerPadding = innerPadding)
+                1 -> HomePage(navController = navController, innerPadding = innerPadding)
+                2 -> AllChampPage(navController = navController, innerPadding = innerPadding)
             }
         }
 
