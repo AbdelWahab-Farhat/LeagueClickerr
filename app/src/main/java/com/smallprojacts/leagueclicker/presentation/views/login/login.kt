@@ -80,7 +80,6 @@ fun LoginView(navController: NavHostController) {
                 coroutineScope.launch {
                     val value = NetworkService().loginUser(mutableEmailText, mutablePasswordText)
                     if (value == 1) {
-                        // Navigate to main screen and remove the login screen from backstack
                         navController.navigate("main_screen") {
                             popUpTo(navController.graph.startDestinationId) {
                                 inclusive = true
@@ -88,7 +87,6 @@ fun LoginView(navController: NavHostController) {
                             launchSingleTop = true
                         }
                     } else {
-                        // Handle login failure, show an error or snack bar
                         d("LoginView", "Login failed. Please check your credentials.")
                     }
                 }

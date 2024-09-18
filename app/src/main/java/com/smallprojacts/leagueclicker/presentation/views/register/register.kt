@@ -96,7 +96,11 @@ fun RegisterView(navController: NavHostController) {
                                 mutablePasswordText
                             )
                             if (value == 1) {
+                                snackbarHostState.showSnackbar("Registration Successfully")
                                 navController.navigate("login_view")
+                            }
+                            else {
+                                snackbarHostState.showSnackbar("Registration failed: User already exists")
                             }
                         } catch (e: Exception) {
                             println("Registration failed: ${e.message}")
