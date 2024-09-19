@@ -67,7 +67,7 @@ fun MyChampScreen(
             modifier = modifier,
             containerColor = Color.Transparent,
             topBar = {
-                CustomChampTopBar()
+                CustomChampTopBar(navController = navController)
             },
             bottomBar = {
                 Box(
