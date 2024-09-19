@@ -9,5 +9,7 @@ object RemoteRoutes {
     const val GETMYDETAILCHAMP = "$BASE_URL/users/test/get"
     const val WHO_AM_I = "$BASE_URL/who-am-i"
     const val ALL_CHAMP = "$BASE_URL/champions"
+    const val FILTERS = "$BASE_URL/champions/filters/getall"
+    const val SEARCH = "$BASE_URL/champions?"
 }
 
