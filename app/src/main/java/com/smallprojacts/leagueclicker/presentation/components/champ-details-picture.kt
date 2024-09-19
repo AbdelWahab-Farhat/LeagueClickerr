@@ -22,11 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.smallprojacts.leagueclicker.R
 
 @Composable
 fun ChampionDetailsPicture(
     modifier: Modifier = Modifier,
+    imagepath: Any= R.drawable.champ1,
     name: String,
     level: Int?,
     title: String?,
@@ -36,7 +38,8 @@ fun ChampionDetailsPicture(
         modifier = Modifier.size(height = 360.dp, width = 1000.dp)
     ) {
         Image(
-            painter = painterResource(R.drawable.champ1),
+
+            painter = rememberAsyncImagePainter(imagepath),
             contentDescription = "Image",
             modifier = Modifier
                 .fillMaxWidth()
