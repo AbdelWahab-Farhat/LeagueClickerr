@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
-import com.smallprojacts.leagueclicker.data.api.AllMyEvents
-import com.smallprojacts.leagueclicker.data.api.Champ
 import com.smallprojacts.leagueclicker.presentation.components.AbilitySelector
 import com.smallprojacts.leagueclicker.presentation.components.ChampionDetailsPicture
 import com.smallprojacts.leagueclicker.presentation.components.CustomButton

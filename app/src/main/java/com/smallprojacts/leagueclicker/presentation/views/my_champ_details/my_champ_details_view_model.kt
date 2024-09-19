@@ -6,9 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smallprojacts.leagueclicker.data.api.AllMyEvents
 import com.smallprojacts.leagueclicker.data.api.ApiState
-import com.smallprojacts.leagueclicker.data.api.Champ
 import com.smallprojacts.leagueclicker.domain.models.repositories.ChampDetailsRepository
 import kotlinx.coroutines.launch
 
@@ -18,11 +16,7 @@ class MyChampDetailsViewModel(private val repository: ChampDetailsRepository) : 
         private set
 
 
-    fun onDynamicEvent(event: AllMyEvents){
-        val myEvent = event as AllMyEvents.MyChampDetailsStateEvent;
-        myEvent.data
 
-    }
 
     fun onEvent(event: MyChampDetailsEvent){
         when(event){
