@@ -79,7 +79,8 @@ fun LoginView(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            ForgetPasswordButton(onClick = {})
+            ForgetPasswordButton(onClick = {
+                navController.navigate("forget_view") })
 
             Spacer(modifier = Modifier.height(50.dp))
 

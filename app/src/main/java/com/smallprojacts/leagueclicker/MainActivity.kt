@@ -15,11 +15,11 @@ import com.smallprojacts.leagueclicker.data.api.ChampDetailImpl
 import com.smallprojacts.leagueclicker.data.api.SearchImpl
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampDetailsScreen
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampDetailsViewModel
+import com.smallprojacts.leagueclicker.presentation.views.forgetView.ForgotView
 import com.smallprojacts.leagueclicker.presentation.views.login.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.main_screen.MainScreen
 import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampDetailsViewModel
 import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampScreen
-import com.smallprojacts.leagueclicker.presentation.views.register.RegisterView
 import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.presentation.views.search.SearchViewModel
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 val startDestination = if (TokenManager.getToken() != null) {
                     "main_screen"
                 } else {
-                    "main_screen"
+                    "login_view"
                 }
                 NavigationComponent(
                     navController = navController,
@@ -59,6 +59,9 @@ fun NavigationComponent(navController: NavHostController, startDestination: Stri
         }
         composable("register_view") {
             LoginView(navController = navController)
+        }
+        composable("forget_view") {
+            ForgotView(navController = navController)
         }
         composable("all_champ_detail_view/{champId}") { backStackEntry ->
             val champId =  backStackEntry.arguments?.getString("champId").toString().toInt()

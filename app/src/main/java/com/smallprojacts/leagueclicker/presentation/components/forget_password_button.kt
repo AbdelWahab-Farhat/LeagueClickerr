@@ -12,20 +12,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun  ForgetPasswordButton (onClick: () -> Unit) {
+fun  ForgetPasswordButton (onClick: () -> Unit ,inForget:Int? = 0) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = "Forgot Password ?",
-            color = Color(0xffF3F2F3),
-            fontSize = 15.sp,
-            modifier = Modifier.clickable {
-                onClick()
-            }
-        )
-    }
+        if (inForget == 0) {
+            Text(
+                text = "Forgot Password ?",
+                color = Color(0xffF3F2F3),
+                fontSize = 15.sp,
+                modifier = Modifier.clickable {
+                    onClick()
+                }
+            )
+        }
+        }
 }
 
