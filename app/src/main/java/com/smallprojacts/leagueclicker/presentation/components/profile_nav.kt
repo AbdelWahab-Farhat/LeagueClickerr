@@ -29,7 +29,7 @@ import com.smallprojacts.leagueclicker.R
 
 
 @Composable
-fun ProfileNav(name: String = "Ace D Roger", imageId:Int = R.drawable.champ1) {
+fun ProfileNav(name: String? = "Ace D Roger", imageId:Int = R.drawable.champ1) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,7 +61,7 @@ fun ProfileNav(name: String = "Ace D Roger", imageId:Int = R.drawable.champ1) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = name,
+                    text = name?: "Ace D Roger",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

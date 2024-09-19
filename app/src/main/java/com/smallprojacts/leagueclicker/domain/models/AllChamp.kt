@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 data class AllChamp(
     @SerialName("id") var id: Int? = null,
     @SerialName("name") var name: String? = null,
+    @SerialName("description") var description: String? = null,
+    @SerialName("model_3d") var model3d: String? = null,
     @SerialName("title") var title: String? = null,
     @SerialName("character_class_id") var characterClassId: Int? = null,
     @SerialName("legacy_id") var legacyId: Int? = null,
@@ -24,7 +26,10 @@ data class AllChamp(
     @SerialName("character_class") var characterClass: CharacterClass? = CharacterClass(),
     @SerialName("abilities") var abilities: ArrayList<Abilities> = arrayListOf(),
     @SerialName("stats") var stats: Stats? = Stats(),
-    @SerialName("region") var region: Region? = Region()
+    @SerialName("region") var region: Region? = Region(),
+    @SerialName("champion_image_fullbody") var championImageFullBody: String? = null,
+
+
 
 )
 

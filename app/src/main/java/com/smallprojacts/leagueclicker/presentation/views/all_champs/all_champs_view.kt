@@ -13,15 +13,24 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.smallprojacts.leagueclicker.data.api.HomeApi
+import com.smallprojacts.leagueclicker.domain.models.AllChamp
 import com.smallprojacts.leagueclicker.presentation.components.ChampionGrid
 import com.smallprojacts.leagueclicker.presentation.components.CustomTextField
 import com.smallprojacts.leagueclicker.presentation.components.RuneterraRegions
+import kotlinx.coroutines.launch
 
 @Composable
 fun AllChampPage(
@@ -29,23 +38,22 @@ fun AllChampPage(
     navController: NavHostController,
     innerPadding: PaddingValues
 ) {
-    val stats = mapOf(
-        "Strength" to 1,
-        "Intelligence" to 5,
-        "Speed" to 3,
-        "Health" to 2,
-        "Attack Damage" to 4,
-        "safas" to 1,
-        ";kga" to 1,
-        "p9ipwt" to 1,
-        "gkasg;" to 1,
-        "ask" to 1,
-    )
+    // Define state for the list of champions
+    var champs by remember { mutableStateOf<List<AllChamp>>(emptyList()) }
+    val coroutineScope = rememberCoroutineScope()
+
+    // Fetch champions when the composable is first launched
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            // Fetch the list of champions and update the state
+            champs = HomeApi().getChamps()
+        }
+    }
     ChampionGrid(
         modifier = Modifier
             .padding(innerPadding)
             .padding(horizontal = 20.dp),
-        champs = stats,
+        champs = champs,
         header = {
             Spacer(modifier = Modifier.height(20.dp))
 

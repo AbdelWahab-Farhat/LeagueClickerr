@@ -1,5 +1,6 @@
 package com.smallprojacts.leagueclicker.presentation.views.main_screen
 
+import HomePage
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -22,10 +24,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import com.smallprojacts.leagueclicker.data.api.HomeApi
 import com.smallprojacts.leagueclicker.presentation.components.BottomNavBar
 import com.smallprojacts.leagueclicker.presentation.components.ProfileNav
 import com.smallprojacts.leagueclicker.presentation.views.all_champs.AllChampPage
-import com.smallprojacts.leagueclicker.presentation.views.homepage.HomePage
 import com.smallprojacts.leagueclicker.presentation.views.my_all_champs.MyChampPage
 import kotlinx.coroutines.launch
 
@@ -36,6 +38,16 @@ fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) 
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { 3 }, initialPage = 1)
     var selectedItem by remember { mutableIntStateOf(1) }
+    var userName by remember { mutableStateOf<String?>(null) }
+
+    // Launch a coroutine to call the suspend function
+    LaunchedEffect(Unit) {
+        scope.launch {
+            // Call the suspend function to get the username
+            val fetchedUserName = HomeApi().getUserName()
+            userName = fetchedUserName
+        }
+    }
 
     Scaffold(
         modifier = modifier.background(
@@ -52,7 +64,8 @@ fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) 
                     containerColor = Color(0xff0A1428),
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
-                title = { ProfileNav() }
+                // Pass the username to ProfileNav if available
+                title = { ProfileNav(name = userName) }
             )
         },
         bottomBar = {
@@ -64,8 +77,7 @@ fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) 
                 selectedItem
             )
         },
-
-        ) { innerPadding ->
+    ) { innerPadding ->
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
@@ -77,6 +89,7 @@ fun MainScreen(modifier: Modifier = Modifier, navController: NavHostController) 
             }
         }
 
+        // Sync selected item with the current page
         LaunchedEffect(pagerState.currentPage) {
             selectedItem = pagerState.currentPage
         }

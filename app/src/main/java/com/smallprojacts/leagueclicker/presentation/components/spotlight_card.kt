@@ -25,14 +25,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.smallprojacts.leagueclicker.R
+import com.smallprojacts.leagueclicker.domain.models.AllChamp
 
 @Composable
-fun SpotlightCard(modifier: Modifier = Modifier) {
+fun SpotlightCard(modifier: Modifier = Modifier, champs: List<AllChamp>) {
+    val shuffledchamps = champs.shuffled()
+    var champp:AllChamp? = null
+    for (champ in shuffledchamps) {
+        if (champ.championImageFullBody != null) {
+            champp = champ;
+            break;
+        }
+    }
+    var imageBackground = R.drawable.background1
+    if (champp?.region?.id == 1) {
+         imageBackground = R.drawable.background2
+    }
+    else if (champp?.region?.id == 2){
+    }
+    else {
+
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,15 +69,17 @@ fun SpotlightCard(modifier: Modifier = Modifier) {
         ) {
             Box(
             ) {
-                Image(
-                    painter = painterResource(R.drawable.yasoubg),
-                    alignment = Alignment.Center,
-                    contentScale = ContentScale.FillWidth,
-                    contentDescription = "Spotlighted Champion Card",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(shape = RoundedCornerShape(8)),
-                )
+                if (champp?.region != null) {
+                    Image(
+                        painter = painterResource(id = imageBackground),
+                        alignment = Alignment.Center,
+                        contentScale = ContentScale.FillWidth,
+                        contentDescription = "Spotlighted Champion Card",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(shape = RoundedCornerShape(8)),
+                    )
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -64,14 +88,14 @@ fun SpotlightCard(modifier: Modifier = Modifier) {
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "Yasuo",
+                         text = champp?.name ?: "Opp's we have null value's",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                     Text(
                         modifier = Modifier.fillMaxWidth(1f),
-                        text = "The Unforgivable",
+                        text = champp?.title ?: "Opp's we have null value's",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Normal,
                         color = Color.White
@@ -97,12 +121,19 @@ fun SpotlightCard(modifier: Modifier = Modifier) {
                 }
             }
         }
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.yasou),
-            alignment = Alignment.CenterEnd,
-            contentScale = ContentScale.FillHeight,
-            contentDescription = "Spotlighted Champion Card"
-        )
+        if (champp != null) {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(champp.championImageFullBody)
+                        .crossfade(true) // Optional: Enable fade-in animation
+                        .build()
+                ),
+                alignment = Alignment.CenterEnd,
+                contentScale = ContentScale.FillHeight,
+                contentDescription = "Spotlighted Champion Card"
+            )
+        }
     }
 }

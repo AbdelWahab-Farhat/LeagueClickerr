@@ -14,6 +14,7 @@ import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllC
 import com.smallprojacts.leagueclicker.presentation.views.login.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.main_screen.MainScreen
 import com.smallprojacts.leagueclicker.presentation.views.register.RegisterView
+import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +22,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TokenManager.init(this)
-
         enableEdgeToEdge()
         setContent {
             LeagueClickerTheme {
@@ -54,6 +54,9 @@ fun NavigationComponent(navController: NavHostController, startDestination: Stri
         }
         composable("main_screen") {
             MainScreen(navController = navController)
+        }
+        composable("search") {
+            SearchScreen(navController = navController)
         }
         // add more screen here
     }
