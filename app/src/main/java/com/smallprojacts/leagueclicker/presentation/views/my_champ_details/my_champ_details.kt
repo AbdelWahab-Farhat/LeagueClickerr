@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,7 +58,15 @@ fun MyChampScreen(modifier: Modifier = Modifier, navController: NavHostControlle
             modifier = modifier,
             containerColor = Color.Transparent,
             topBar = {
-                CustomChampTopBar(navController = navController)
+                CustomChampTopBar(navController = navController, title = {}, iconButton = {
+                    IconButton(onClick = { /* do something */ }) {
+                        Icon(
+                            imageVector = Icons.Filled.FilterAlt,
+                            contentDescription = "Show 3d Model",
+                            tint = Color(0xffF3F2F3)
+                        )
+                    }
+                })
             },
         ) { innerPadding ->
             val stats = mapOf(

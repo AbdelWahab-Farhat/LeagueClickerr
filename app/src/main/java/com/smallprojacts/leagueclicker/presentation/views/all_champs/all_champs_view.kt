@@ -41,70 +41,70 @@ fun AllChampPage(
         "gkasg;" to 1,
         "ask" to 1,
     )
-    ChampionGrid(
-        modifier = Modifier
-            .padding(innerPadding)
-            .padding(horizontal = 20.dp),
-        champs = stats,
-        header = {
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Box(
-                modifier = modifier.clickable {
-                    navController.clearBackStack("search")
-                    navController.navigate("search")
-                }
-            ) {
-                CustomTextField(
-                    isEnabled = false,
-                    label = null,
-                    placeholder = {
-                        Text(
-                            text = "Search",
-                            color = Color(0xffF3F2F3)
-                        )
-                    },
-                    suffexicon =
-                    {
-                        Row {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search Icon",
-                                tint = Color(0xffF3F2F3),
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
-                            Icon(
-                                imageVector = Icons.Default.MoreVert,
-                                contentDescription = "Search Icon",
-                                tint = Color(0xffF3F2F3),
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
-                        }
-                    }
-                )
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Text(
-                text = "Runeterra",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xffF3F2F3)
-            )
-
-            RuneterraRegions(modifier)
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Text(
-                text = "Champions",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xffF3F2F3)
-            )
-
-            Spacer(modifier = Modifier.height(15.dp))
-        }
-    )
+//    ChampionGrid(
+//        modifier = Modifier
+//            .padding(innerPadding)
+//            .padding(horizontal = 20.dp),
+//        champs = ,
+//        header = {
+//            Spacer(modifier = Modifier.height(20.dp))
+//
+//            Box(
+//                modifier = modifier.clickable {
+//                    navController.clearBackStack("search")
+//                    navController.navigate("search")
+//                }
+//            ) {
+//                CustomTextField(
+//                    isEnabled = false,
+//                    label = null,
+//                    placeholder = {
+//                        Text(
+//                            text = "Search",
+//                            color = Color(0xffF3F2F3)
+//                        )
+//                    },
+//                    suffexicon =
+//                    {
+//                        Row {
+//                            Icon(
+//                                imageVector = Icons.Default.Search,
+//                                contentDescription = "Search Icon",
+//                                tint = Color(0xffF3F2F3),
+//                                modifier = Modifier.padding(end = 8.dp)
+//                            )
+//                            Icon(
+//                                imageVector = Icons.Default.MoreVert,
+//                                contentDescription = "Search Icon",
+//                                tint = Color(0xffF3F2F3),
+//                                modifier = Modifier.padding(end = 8.dp)
+//                            )
+//                        }
+//                    }
+//                )
+//            }
+//
+//            Spacer(modifier = Modifier.height(30.dp))
+//
+//            Text(
+//                text = "Runeterra",
+//                fontSize = 20.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = Color(0xffF3F2F3)
+//            )
+//
+//            RuneterraRegions(modifier)
+//
+//            Spacer(modifier = Modifier.height(30.dp))
+//
+//            Text(
+//                text = "Champions",
+//                fontSize = 20.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = Color(0xffF3F2F3)
+//            )
+//
+//            Spacer(modifier = Modifier.height(15.dp))
+//        }
+//    )
 }

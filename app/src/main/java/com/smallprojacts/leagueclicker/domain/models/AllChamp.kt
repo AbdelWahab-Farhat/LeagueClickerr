@@ -25,7 +25,6 @@ data class AllChamp(
     @SerialName("abilities") var abilities: ArrayList<Abilities> = arrayListOf(),
     @SerialName("stats") var stats: Stats? = Stats(),
     @SerialName("region") var region: Region? = Region()
-
 )
 
 

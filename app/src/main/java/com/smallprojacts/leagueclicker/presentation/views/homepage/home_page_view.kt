@@ -58,44 +58,44 @@ fun HomePage(
         "gkasg;" to 1,
         "ask" to 1,
     )
-    ChampionGrid(
-        modifier = Modifier
-            .padding(innerPadding)
-            .padding(horizontal = 20.dp),
-        champs = stats, header = {
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "Spotlight",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-
-            SpotlightCard()
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = "Recent Champion",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-
-            RandomChampSpotLight(modifier)
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Text(
-                text = "Popular Champions",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-
-            Spacer(modifier = Modifier.height(15.dp))
-        }
-    )
+//    ChampionGrid(
+//        modifier = Modifier
+//            .padding(innerPadding)
+//            .padding(horizontal = 20.dp),
+//        champs = stats, header = {
+//
+//            Spacer(modifier = Modifier.height(20.dp))
+//
+//            Text(
+//                text = "Spotlight",
+//                fontSize = 20.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = Color.White
+//            )
+//
+//            SpotlightCard()
+//
+//            Spacer(modifier = Modifier.height(20.dp))
+//
+//            Text(
+//                text = "Recent Champion",
+//                fontSize = 20.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = Color.White
+//            )
+//
+//            RandomChampSpotLight(modifier)
+//
+//            Spacer(modifier = Modifier.height(30.dp))
+//
+//            Text(
+//                text = "Popular Champions",
+//                fontSize = 20.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = Color.White
+//            )
+//
+//            Spacer(modifier = Modifier.height(15.dp))
+//        }
+//    )
 }
