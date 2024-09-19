@@ -1,5 +1,6 @@
 package com.smallprojacts.leagueclicker.presentation.views.all_champ_details
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -19,6 +21,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -32,16 +35,27 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
 import com.smallprojacts.leagueclicker.presentation.components.AbilitySelector
+import com.smallprojacts.leagueclicker.presentation.components.BottomNavBar
 import com.smallprojacts.leagueclicker.presentation.components.ChampionDetailsPicture
 import com.smallprojacts.leagueclicker.presentation.components.ClassAndDifficulty
 import com.smallprojacts.leagueclicker.presentation.components.CustomButton
 import com.smallprojacts.leagueclicker.presentation.components.CustomChampTopBar
 import com.smallprojacts.leagueclicker.presentation.components.DifficultyMeter
 import com.smallprojacts.leagueclicker.presentation.components.StatMeterGrid
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AllChampScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun AllChampDetailsScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    state: AllChampDetailsState,
+    onEvent: (AllChampDetailsEvent) -> Unit,
+    championId: Int
+) {
+    LaunchedEffect(key1 = Unit) {
+        onEvent(AllChampDetailsEvent.PageInit(championId))
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -59,6 +73,15 @@ fun AllChampScreen(modifier: Modifier = Modifier, navController: NavHostControll
             topBar = {
                 CustomChampTopBar()
             },
+            bottomBar = {
+                    Box(
+                        modifier = modifier
+                            .background(Color(0xff0A1428))
+                            .padding(horizontal = 20.dp,).padding(top = 5.dp) .navigationBarsPadding()
+                    ) {
+                        CustomButton(onClick = {}, title = "Add Champion")
+                    }
+            }
         ) { innerPadding ->
             val stats = mapOf(
                 "Strength" to 1,
@@ -74,7 +97,12 @@ fun AllChampScreen(modifier: Modifier = Modifier, navController: NavHostControll
             ) {
 
                 ChampionDetailsPicture(
-                    modifier = modifier, "Ezreal", null, "The Prodigal Explorer", null
+                    modifier = modifier,
+                    imagepath = "${state.champ.championImage}",
+                    name = "${state.champ.name ?: ""} ",
+                    title = "${state.champ.title}",
+                    level = null,
+                    numOfClicks = null
                 )
 
                 Column(
@@ -83,7 +111,7 @@ fun AllChampScreen(modifier: Modifier = Modifier, navController: NavHostControll
                         .padding(top = 20.dp),
                 ) {
                     Text(
-                        "An adventurer, with a natural talent in the magical arts, he discovers buried catacombs and becomes involved with ancient curses.",
+                        "${state.champ.abilities.getOrNull(0)?.description ?: "No ability description available"} ",
                         color = Color(0xffF3F2F3),
                         fontSize = 16.sp
                     )
@@ -98,13 +126,11 @@ fun AllChampScreen(modifier: Modifier = Modifier, navController: NavHostControll
                     )
 
                 }
-                AbilitySelector(modifier = modifier)
 
-                ClassAndDifficulty(champClass = "Marksman", difficulty = 1)
+                AbilitySelector(modifier = modifier,state = state,onEvent = onEvent)
+                ClassAndDifficulty(champClass = state.champ.legacy?.type ?: "No Class", difficulty = 1)
+                Spacer(modifier =  Modifier.navigationBarsPadding().height(60.dp))
 
-                Box(modifier = modifier.padding(20.dp)) {
-                    CustomButton(onClick = {}, title = "Add Champion")
-                }
             }
         }
     }
