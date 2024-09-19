@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 val startDestination = if (TokenManager.getToken() != null) {
                     "main_screen"
                 } else {
-                    "my_champ_detail_view"
+                    "main_screen"
                 }
                 NavigationComponent(
                     navController = navController,
@@ -48,7 +48,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun NavigationComponent(navController: NavHostController, startDestination: String) {
     NavHost(
@@ -56,22 +55,35 @@ fun NavigationComponent(navController: NavHostController, startDestination: Stri
         startDestination = startDestination // Starting screen based on token availability
     ) {
         composable("login_view") {
-            LoginView(navController =  navController)
+            LoginView(navController = navController)
         }
         composable("register_view") {
-            RegisterView(navController = navController)
+            LoginView(navController = navController)
         }
-        composable("all_champ_detail_view") {
-            val champModel: AllChampDetailsViewModel = viewModel(){AllChampDetailsViewModel(repository = ChampDetailImpl())}
-            AllChampDetailsScreen(navController= navController, state = champModel.state, onEvent = champModel::onEvent, championId = 1)
+        composable("all_champ_detail_view/{champId}") { backStackEntry ->
+            val champId =  backStackEntry.arguments?.getString("champId").toString().toInt()
+            val champModel: AllChampDetailsViewModel =
+                viewModel() { AllChampDetailsViewModel(repository = ChampDetailImpl()) }
+            AllChampDetailsScreen(
+                navController = navController,
+                state = champModel.state,
+                onEvent = champModel::onEvent,
+                championId = champId ?: 0
+            )
         }
-        composable("my_champ_detail_view") {
-
-            val myChampModel: MyChampDetailsViewModel = viewModel(){MyChampDetailsViewModel(repository = ChampDetailImpl())}
-            MyChampScreen(navController= navController, state = myChampModel.state, onEvent = myChampModel::onEvent, championId = 1)
+        composable("my_champ_detail_view/{champId}") {backStackEntry ->
+            val champId =  backStackEntry.arguments?.getString("champId").toString().toInt()
+            val myChampModel: MyChampDetailsViewModel =
+                viewModel() { MyChampDetailsViewModel(repository = ChampDetailImpl()) }
+            MyChampScreen(
+                navController = navController,
+                state = myChampModel.state,
+                onEvent = myChampModel::onEvent,
+                championId = champId ?: 0
+            )
         }
         composable("main_screen") {
-            MainScreen(navController= navController)
+            MainScreen(navController = navController)
         }
         composable("search") {
             val searchViewModel = viewModel() { SearchViewModel(searchRepository = SearchImpl()) }

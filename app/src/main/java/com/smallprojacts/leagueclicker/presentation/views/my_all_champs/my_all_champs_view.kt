@@ -43,7 +43,10 @@ fun MyChampPage(
     }
     ChampionGrid(
         modifier = Modifier.padding(innerPadding).padding(horizontal = 20.dp),
-        champs = champs, header = {
+        champs = champs,
+        navController = navController,
+        isMyChamp = true,
+        header = {
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(

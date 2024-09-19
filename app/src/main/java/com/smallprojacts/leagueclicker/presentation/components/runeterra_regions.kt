@@ -21,50 +21,58 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.smallprojacts.leagueclicker.R
+import com.smallprojacts.leagueclicker.domain.models.Region
 
 
 @Composable
-fun RuneterraRegions(modifier: Modifier, count:Int = 10) {
+fun RuneterraRegions(modifier: Modifier, count:Int = 10,regions: List<Region>) {
     LazyRow(
         modifier = Modifier.padding(top = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(end = 20.dp)
     ) {
-        items(count) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Card(
-                    modifier = modifier
-                        .height(100.dp)
-                        .width(92.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xff2B2C33))
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+        regions.forEach { region ->
+            item {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Card(
+                        modifier = modifier
+                            .height(100.dp)
+                            .width(92.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xff2B2C33))
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.shadow),
-                            contentDescription = "Image",
-                            modifier = Modifier.fillMaxSize()
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = rememberAsyncImagePainter(region.region_logo),
+                            //    painter = painterResource(R.drawable.shadow),
+                                contentDescription = "Image",
+                                modifier = Modifier.fillMaxSize()
 
-                        )
+                            )
+                        }
+
                     }
+                    Text(
+                        text = region.name.toString(),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
                 }
-                Text(
-                    text = "Targon",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
 
             }
         }
+//        items(count) {
+//        }
 
     }
 }

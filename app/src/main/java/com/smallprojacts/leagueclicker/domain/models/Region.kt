@@ -12,5 +12,9 @@ data class Region(
     @SerialName("description") var description: String? = null,
     @SerialName("created_at") var createdAt: String? = null,
     @SerialName("updated_at") var updatedAt: String? = null,
-    @SerialName("region_image") var region_image: String? = null
+    @SerialName("region_image") var region_image: String? = null,
+    @SerialName("region_logo") var region_logo: String? = null
+
+
+
 )

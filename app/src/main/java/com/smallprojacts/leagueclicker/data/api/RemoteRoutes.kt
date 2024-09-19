@@ -11,5 +11,6 @@ object RemoteRoutes {
     const val ALL_CHAMP = "$BASE_URL/champions"
     const val FILTERS = "$BASE_URL/champions/filters/getall"
     const val SEARCH = "$BASE_URL/champions?"
+    const val REGION = "$BASE_URL/regions"
 }
 

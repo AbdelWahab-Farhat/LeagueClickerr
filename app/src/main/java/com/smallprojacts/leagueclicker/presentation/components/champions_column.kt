@@ -3,6 +3,7 @@ package com.smallprojacts.leagueclicker.presentation.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.smallprojacts.leagueclicker.domain.models.AllChamp
@@ -43,6 +45,8 @@ fun ChampionGrid(
     modifier: Modifier = Modifier,
     champs: List<AllChamp>,
     itemsPerRow: Int = 3,
+    navController: NavController,
+    isMyChamp: Boolean = false,
     header: @Composable ColumnScope.() -> Unit = {},
 ) {
     val statList = champs.toList()
@@ -61,20 +65,32 @@ fun ChampionGrid(
 
         // Render each champion card
         items(champs) { champ ->
-            ChampionCard(champ = champ)
+            ChampionCard(champ = champ, navController = navController, isMyChamp = isMyChamp)
         }
     }
 }
 
 @Composable
-fun ChampionCard(modifier: Modifier = Modifier, champ: AllChamp) {
+fun ChampionCard(
+    modifier: Modifier = Modifier,
+    champ: AllChamp,
+    navController: NavController,
+    isMyChamp: Boolean
+) {
     Card(
         modifier = Modifier
             .height(200.dp)
-            .width(150.dp),  // Made width a bit larger for better layout
+            .width(150.dp)
+            .clickable {
+                if (isMyChamp)
+                    navController.navigate("my_champ_detail_view/${champ.id}")
+                else
+                    navController.navigate("all_champ_detail_view/${champ.id}")
+            },
         colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
-        )
+            containerColor = Color.Transparent,
+
+            )
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -92,7 +108,9 @@ fun ChampionCard(modifier: Modifier = Modifier, champ: AllChamp) {
                 color = Color.White,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp)
             )
 
             // Champion Title
@@ -103,11 +121,14 @@ fun ChampionCard(modifier: Modifier = Modifier, champ: AllChamp) {
                 color = Color.Gray,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp)
             )
         }
     }
 }
+
 @Composable
 fun ChampImage(champ: AllChamp) {
     Image(

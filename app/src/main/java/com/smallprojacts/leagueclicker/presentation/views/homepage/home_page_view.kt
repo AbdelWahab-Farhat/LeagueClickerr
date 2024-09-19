@@ -35,7 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.data.api.HomeApi
+import com.smallprojacts.leagueclicker.data.api.SearchImpl
 import com.smallprojacts.leagueclicker.domain.models.AllChamp
+import com.smallprojacts.leagueclicker.domain.models.Region
 import com.smallprojacts.leagueclicker.presentation.components.ChampionGrid
 import com.smallprojacts.leagueclicker.presentation.components.RandomChampSpotLight
 import com.smallprojacts.leagueclicker.presentation.components.SpotlightCard
@@ -49,6 +51,7 @@ fun HomePage(
 ) {
     // Define state for the list of champions
     var champs by remember { mutableStateOf<List<AllChamp>>(emptyList()) }
+
     val coroutineScope = rememberCoroutineScope()
 
     // Fetch champions when the composable is first launched
@@ -65,7 +68,8 @@ fun HomePage(
         modifier = Modifier
             .padding(innerPadding)
             .padding(horizontal = 20.dp),
-        champs = champs,  // Pass the fetched list of champions
+        champs = champs,
+        navController = navController,
         header = {
 
             Spacer(modifier = Modifier.height(20.dp))
