@@ -50,9 +50,25 @@ fun SpotlightCard(modifier: Modifier = Modifier, champs: List<AllChamp>) {
          imageBackground = R.drawable.background2
     }
     else if (champp?.region?.id == 2){
+        imageBackground = R.drawable.background2
+    }
+    else if (champp?.region?.id == 3) {
+        imageBackground = R.drawable.background1
+    }
+    else if (champp?.region?.id == 4) {
+        imageBackground = R.drawable.piltover_impacts_across_valoran
+    }
+    else if (champp?.region?.id == 8) {
+        imageBackground = R.drawable.bilgewater_a_new_beginning
+    }
+    else if (champp?.region?.id == 10) {
+        imageBackground = R.drawable.bandlbg
+    }
+    else if (champp?.region?.id == 11) {
+        imageBackground = R.drawable.freljord_vaults_of_the_iceborn
     }
     else {
-
+        imageBackground = R.drawable.background1
     }
 
     Box(
@@ -98,7 +114,7 @@ fun SpotlightCard(modifier: Modifier = Modifier, champs: List<AllChamp>) {
                         text = champp?.title ?: "Opp's we have null value's",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color.White
+                        color =  Color.White
                     )
                     Spacer(Modifier.height(24.dp))
                     Box(
