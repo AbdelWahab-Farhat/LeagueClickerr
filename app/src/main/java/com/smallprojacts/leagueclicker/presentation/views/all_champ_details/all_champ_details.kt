@@ -98,15 +98,6 @@ fun AllChampDetailsScreen(
                     }
             }
         ) { innerPadding ->
-            val stats = mapOf(
-                "Strength" to 1,
-                "Intelligence" to 5,
-                "Speed" to 3,
-                "Health" to 2,
-                "Attack Damage" to 4,
-                "Ability Power" to 1
-            )
-
             Column(
                 modifier = modifier.verticalScroll(rememberScrollState())
             ) {

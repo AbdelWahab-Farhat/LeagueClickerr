@@ -57,7 +57,7 @@ fun BottomNavBar(operation: (Int) -> Unit, selectItem: Int) {
         containerColor = Color(0xff0A1428),
         tonalElevation = 0.dp,
         modifier = Modifier
-            .shadow(elevation = 10.dp)
+            .shadow(elevation = 10.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -92,6 +92,9 @@ fun BottomNavBar(operation: (Int) -> Unit, selectItem: Int) {
                     label = { Text(item, color = Color.White, fontSize = 16.sp) },
                     selected = selectItem == index,
                     onClick = { operation(index) },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = Color(0xffC89B3C)
+                    ),
                     modifier = Modifier
                         .padding(0.dp)
                         .size(width = 140.dp, height = 50.dp),
