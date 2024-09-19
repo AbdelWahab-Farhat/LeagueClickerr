@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,12 +16,16 @@ import androidx.navigation.compose.rememberNavController
 import com.smallprojacts.leagueclicker.data.api.ChampDetailImpl
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampDetailsScreen
 import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampDetailsViewModel
+import com.smallprojacts.leagueclicker.data.api.SearchImpl
+import com.smallprojacts.leagueclicker.presentation.views.all_champ_details.AllChampScreen
 import com.smallprojacts.leagueclicker.presentation.views.login.LoginView
 import com.smallprojacts.leagueclicker.presentation.views.main_screen.MainScreen
 import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampDetailsViewModel
 import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampScreen
 import com.smallprojacts.leagueclicker.presentation.views.register.RegisterView
 import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
+import com.smallprojacts.leagueclicker.presentation.views.search.SearchScreen
+import com.smallprojacts.leagueclicker.presentation.views.search.SearchViewModel
 import com.smallprojacts.leagueclicker.ui.theme.LeagueClickerTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,6 +33,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TokenManager.init(this)
+
         enableEdgeToEdge()
         setContent {
             LeagueClickerTheme {
@@ -36,7 +43,10 @@ class MainActivity : ComponentActivity() {
                 } else {
                     "my_champ_detail_view"
                 }
-                NavigationComponent(navController = navController, startDestination = startDestination)
+                NavigationComponent(
+                    navController = navController,
+                    startDestination = startDestination
+                )
             }
         }
     }
@@ -67,8 +77,13 @@ fun NavigationComponent(navController: NavHostController, startDestination: Stri
         composable("main_screen") {
             MainScreen(navController= navController)
         }
-        composable("search") {
-            SearchScreen(navController = navController)
+        composable("search_screen") {
+            val searchViewModel = viewModel() { SearchViewModel(searchRepository = SearchImpl()) }
+            SearchScreen(
+                navController = navController,
+                state = searchViewModel.state,
+                onEvent = searchViewModel::onEvent
+            )
         }
         // add more screen here
     }

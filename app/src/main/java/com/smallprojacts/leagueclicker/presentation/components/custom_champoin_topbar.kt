@@ -1,9 +1,11 @@
 package com.smallprojacts.leagueclicker.presentation.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,16 +19,23 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomChampTopBar(modifier: Modifier = Modifier, navController: NavController) {
+fun CustomChampTopBar(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    title: @Composable () -> Unit,
+    iconButton: @Composable () -> Unit
+) {
     TopAppBar(
         modifier = modifier.padding(horizontal = 4.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
             titleContentColor = Color(0xffF3F2F3),
         ),
-        title = {},
+        title = {
+            title()
+        },
         navigationIcon = {
-            IconButton(onClick = navController::popBackStack ) {
+            IconButton(onClick = navController::popBackStack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Go Back",
@@ -35,13 +44,7 @@ fun CustomChampTopBar(modifier: Modifier = Modifier, navController: NavControlle
             }
         },
         actions = {
-            IconButton(onClick = { /* do something */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Notifications,
-                    contentDescription = "Show 3d Model",
-                    tint = Color(0xffF3F2F3)
-                )
-            }
+            iconButton()
         },
     )
 }

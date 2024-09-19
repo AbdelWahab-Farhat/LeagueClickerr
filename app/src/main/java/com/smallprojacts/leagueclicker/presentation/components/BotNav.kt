@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.twotone.Send
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
@@ -48,7 +51,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun BottomNavBar(operation: (Int) -> Unit, selectItem: Int) {
 
-    val items = listOf("My Champs", "Home", "All Champs")
+    val items = listOf("Favorite", "Home", "Champions")
 
     NavigationBar(
         containerColor = Color(0xff0A1428),
@@ -64,22 +67,22 @@ fun BottomNavBar(operation: (Int) -> Unit, selectItem: Int) {
                 NavigationBarItem(
                     icon = {
                         when (item) {
-                            "My Champs" -> Icon(
-                                Icons.AutoMirrored.TwoTone.Send,
+                            "Favorite" -> Icon(
+                                Icons.Filled.Favorite,
                                 contentDescription = item,
                                 tint = Color.White,
                                 modifier = Modifier.size(35.dp)
                             )
 
-                            "All Champs" -> Icon(
-                                Icons.TwoTone.DateRange,
+                            "Champions" -> Icon(
+                                Icons.Filled.Face,
                                 contentDescription = item,
                                 tint = Color.White,
                                 modifier = Modifier.size(35.dp)
                             )
 
                             "Home" -> Icon(
-                                Icons.TwoTone.Home,
+                                Icons.Filled.Home,
                                 contentDescription = item,
                                 tint = Color.White,
                                 modifier = Modifier.size(35.dp)
