@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
+import com.smallprojacts.leagueclicker.data.api.ApiState
 import com.smallprojacts.leagueclicker.presentation.components.AbilitySelector
 import com.smallprojacts.leagueclicker.presentation.components.BottomNavBar
 import com.smallprojacts.leagueclicker.presentation.components.ChampionDetailsPicture
@@ -71,6 +72,7 @@ fun AllChampDetailsScreen(
                 )
             )
     ) {
+
         Scaffold(
             modifier = modifier,
             containerColor = Color.Transparent,
@@ -81,7 +83,7 @@ fun AllChampDetailsScreen(
                     iconButton = {
                         IconButton(onClick = { /* do something */ }) {
                             Icon(
-                                imageVector = Icons.Filled.FilterAlt,
+                                imageVector = Icons.Filled.Notifications,
                                 contentDescription = "Show 3d Model",
                                 tint = Color(0xffF3F2F3)
                             )
@@ -89,55 +91,73 @@ fun AllChampDetailsScreen(
                     })
             },
             bottomBar = {
-                    Box(
-                        modifier = modifier
-                            .background(Color(0xff0A1428))
-                            .padding(horizontal = 20.dp,).padding(top = 5.dp) .navigationBarsPadding()
-                    ) {
-                        CustomButton(onClick = {}, title = "Add Champion")
-                    }
+                Box(
+                    modifier = modifier
+                        .background(Color(0xff0A1428))
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 5.dp)
+                        .navigationBarsPadding()
+                ) {
+                    CustomButton(onClick = {
+                        onEvent(AllChampDetailsEvent.ClickAdd)
+                    }, title = "Add Champion")
+                }
             }
         ) { innerPadding ->
-            Column(
-                modifier = modifier.verticalScroll(rememberScrollState())
-            ) {
-
-                ChampionDetailsPicture(
-                    modifier = modifier,
-                    imagepath = "${state.champ.championImage}",
-                    name = "${state.champ.name ?: ""} ",
-                    title = "${state.champ.title}",
-                    level = null,
-                    numOfClicks = null
-                )
-
-                Column(
+            if (state.load is ApiState.Loading)
+                Box(
                     modifier = modifier
-                        .padding(horizontal = 20.dp)
-                        .padding(top = 20.dp),
+                        .fillMaxSize()
+                        .background(Color(0xff0A1428))
+                )
+            else
+                Column(
+                    modifier = modifier.verticalScroll(rememberScrollState())
                 ) {
-                    Text(
-                        "${state.champ.abilities.getOrNull(0)?.description ?: "No ability description available"} ",
-                        color = Color(0xffF3F2F3),
-                        fontSize = 16.sp
+
+                    ChampionDetailsPicture(
+                        modifier = modifier,
+                        imagepath = "${state.champ.championImage}",
+                        name = "${state.champ.name ?: ""} ",
+                        title = "${state.champ.title}",
+                        level = null,
+                        numOfClicks = null
                     )
 
-                    Spacer(modifier = modifier.size(30.dp))
+                    Column(
+                        modifier = modifier
+                            .padding(horizontal = 20.dp)
+                            .padding(top = 20.dp),
+                    ) {
+                        Text(
+                            "${state.champ.abilities.getOrNull(0)?.description ?: "No ability description available"} ",
+                            color = Color(0xffF3F2F3),
+                            fontSize = 16.sp
+                        )
 
-                    Text(
-                        "Items & Skills",
-                        color = Color(0xffF3F2F3),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        Spacer(modifier = modifier.size(30.dp))
+
+                        Text(
+                            "Items & Skills",
+                            color = Color(0xffF3F2F3),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                    }
+
+                    AbilitySelector(modifier = modifier, state = state, onEvent = onEvent)
+                    ClassAndDifficulty(
+                        champClass = state.champ.legacy?.type ?: "No Class",
+                        difficulty = 1
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .height(60.dp)
                     )
 
                 }
-
-                AbilitySelector(modifier = modifier,state = state,onEvent = onEvent)
-                ClassAndDifficulty(champClass = state.champ.legacy?.type ?: "No Class", difficulty = 1)
-                Spacer(modifier =  Modifier.navigationBarsPadding().height(60.dp))
-
-            }
         }
     }
 }

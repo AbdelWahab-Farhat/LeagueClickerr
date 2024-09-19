@@ -11,4 +11,6 @@ interface ChampDetailsRepository {
     suspend fun getChampDetails(champId: Int): AllChamp
 
     suspend fun getMyChampDetails(): List<MyChamp>
+    suspend fun addchamp(champId: Int): Boolean
+
 }

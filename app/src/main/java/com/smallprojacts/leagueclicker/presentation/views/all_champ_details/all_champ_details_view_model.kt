@@ -19,7 +19,7 @@ class AllChampDetailsViewModel(private val repository: ChampDetailsRepository) :
     fun onEvent(event: AllChampDetailsEvent) {
         when (event) {
             is AllChampDetailsEvent.PageInit -> getDetails(event.champId)
-            AllChampDetailsEvent.ClickAdd -> {}
+            AllChampDetailsEvent.ClickAdd -> addchamp()
             is AllChampDetailsEvent.ClickAbility -> updateActive(event.activeId)
         }
     }
@@ -61,5 +61,10 @@ class AllChampDetailsViewModel(private val repository: ChampDetailsRepository) :
         }
     }
 
+    private fun addchamp() {
+        viewModelScope.launch {
+            repository.addchamp(state.champ.id ?: 0 )
+        }
+    }
 
 }

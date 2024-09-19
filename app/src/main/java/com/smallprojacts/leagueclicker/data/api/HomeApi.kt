@@ -3,6 +3,7 @@ package com.smallprojacts.leagueclicker.data.api
 import TokenManager
 import android.util.Log
 import com.smallprojacts.leagueclicker.domain.models.AllChamp
+import com.smallprojacts.leagueclicker.domain.models.MyChamp
 import io.ktor.client.call.body
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
@@ -80,6 +81,23 @@ class HomeApi {
 
         } catch (e: Exception) {
             Log.e("HomeApi", "Exception caught: ${e.message}")
+            e.printStackTrace()
+            emptyList() // Return an empty list if there's an exception
+        }
+    }
+    suspend fun getMyChamps(): List<MyChamp> {
+        return try {
+
+            ClientConfig.client.get(RemoteRoutes.GETCHAMP) {
+                headers {
+                    append(
+                        "Authorization",
+                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
+                    )
+                }
+            }.body<List<MyChamp>>()
+        } catch (e: Exception) {
+            Log.e("Abubaker", "Exception caught: ${e.message}")
             e.printStackTrace()
             emptyList() // Return an empty list if there's an exception
         }

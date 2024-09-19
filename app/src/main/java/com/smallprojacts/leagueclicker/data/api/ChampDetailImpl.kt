@@ -5,9 +5,17 @@ import com.smallprojacts.leagueclicker.domain.models.AllChamp
 import com.smallprojacts.leagueclicker.domain.models.MyChamp
 import com.smallprojacts.leagueclicker.domain.models.repositories.ChampDetailsRepository
 import io.ktor.client.call.body
+import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.utils.EmptyContent.headers
+import io.ktor.http.ContentType
+import io.ktor.http.Parameters
+import io.ktor.http.contentType
+import kotlinx.serialization.json.JsonObject
+
 class ChampDetailImpl : ChampDetailsRepository {
     override val client = ClientConfig.client
     override suspend fun getChampDetails(champId: Int): AllChamp {
@@ -28,7 +36,7 @@ class ChampDetailImpl : ChampDetailsRepository {
                     //  append("Authorization", "Bearer ${TokenManager.getToken()}")
                     append(
                         "Authorization",
-                        "Bearer 2|VYlyjcS0wiuqT9bSLnM2KUUVOXabjl5M9glFwIQV2f59352e"
+                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
                     )
                 }
             }.body<List<MyChamp>>()
@@ -38,5 +46,36 @@ class ChampDetailImpl : ChampDetailsRepository {
         }
     }
 
+    override suspend fun addchamp(champId: Int): Boolean {
+        return try {
+
+            Log.d("abuab", "addchamp: $champId")
+
+            val res = client.post("${RemoteRoutes.ADDCHAMP}") {
+                headers {
+                    append(
+                        "Authorization",
+                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
+                    )
+                }
+                contentType(ContentType.Application.FormUrlEncoded)
+                setBody(FormDataContent(Parameters.build {
+                    append("champion_id", champId.toString())
+                }))
+            }
+            Log.d("abuab", "addchamp: $res")
+
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("abuab", "addchamp: sajnkjkndasjnkfkjdns")
+
+            false
+        }
+    }
+
 }
+
+data class ChampionRequest(val champion_id: String)
+
 

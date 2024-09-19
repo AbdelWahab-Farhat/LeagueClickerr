@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.data.api.HomeApi
 import com.smallprojacts.leagueclicker.domain.models.AllChamp
+import com.smallprojacts.leagueclicker.domain.models.MyChamp
 import com.smallprojacts.leagueclicker.presentation.components.ChampionGrid
+import com.smallprojacts.leagueclicker.presentation.components.MyChampionGrid
 import com.smallprojacts.leagueclicker.presentation.components.RandomChampSpotLight
 import kotlinx.coroutines.launch
 
@@ -31,17 +33,21 @@ fun MyChampPage(
     innerPadding: PaddingValues
 ) {
     // Define state for the list of champions
-    var champs by remember { mutableStateOf<List<AllChamp>>(emptyList()) }
+    var champs by remember { mutableStateOf<List<MyChamp>>(emptyList()) }
+    var champsSpot by remember { mutableStateOf<List<AllChamp>>(emptyList()) }
+
     val coroutineScope = rememberCoroutineScope()
 
     // Fetch champions when the composable is first launched
     LaunchedEffect(Unit) {
         coroutineScope.launch {
             // Fetch the list of champions and update the state
-            champs = HomeApi().getChamps()
+            champs = HomeApi().getMyChamps()
+            champsSpot = HomeApi().getChamps()
+
         }
     }
-    ChampionGrid(
+    MyChampionGrid(
         modifier = Modifier.padding(innerPadding).padding(horizontal = 20.dp),
         champs = champs,
         navController = navController,
@@ -56,7 +62,7 @@ fun MyChampPage(
             color = Color.White
         )
 
-        RandomChampSpotLight(modifier = Modifier, champs = champs)
+        RandomChampSpotLight(modifier = Modifier, champs = champsSpot)
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -68,6 +74,7 @@ fun MyChampPage(
         )
 
         Spacer(modifier = Modifier.height(15.dp))
+
     }
     )
 }

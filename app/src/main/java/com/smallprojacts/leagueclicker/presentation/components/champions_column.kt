@@ -47,6 +47,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.smallprojacts.leagueclicker.R
 import com.smallprojacts.leagueclicker.domain.models.AllChamp
+import com.smallprojacts.leagueclicker.domain.models.MyChamp
 
 @Composable
 fun ChampionGrid(
@@ -174,6 +175,154 @@ fun ChampionCard(
 
 @Composable
 fun ChampImage(champ: AllChamp) {
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(champ.championImage)
+                .crossfade(true) // Optional: Enable fade-in animation
+//                .placeholder(R.drawable.poro) // Optional: Placeholder image
+//                .error(R.drawable.jinx) // Optional: Error image in case loading fails
+                .build()
+        ),
+        contentDescription = "${champ.name}'s image",
+        modifier = Modifier
+            .height(130.dp)
+            .clip(shape = RoundedCornerShape(10))
+            .border(
+                border = BorderStroke(2.dp, Color.Black),
+                shape = RoundedCornerShape(10)
+            ),
+        contentScale = ContentScale.Crop
+    )
+}
+
+
+@Composable
+fun MyChampionGrid(
+    modifier: Modifier = Modifier,
+    champs: List<MyChamp>,
+    itemsPerRow: Int = 3,
+    navController: NavController,
+    isMyChamp: Boolean = false,
+    header: @Composable ColumnScope.() -> Unit = {},
+) {
+    val statList = champs.toList()
+    if (champs.isNotEmpty())
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(itemsPerRow),
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
+        ) {
+            // Display the header if any
+            item(span = { GridItemSpan(itemsPerRow) }) {
+                Column {
+                    header()
+                }
+            }
+
+            // Render each champion card
+            items(champs) { champ ->
+                MyChampionCard(champ = champ, navController = navController, isMyChamp = isMyChamp)
+            }
+        }
+    else
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+//                .padding(innerPadding)
+                .padding(start = 20.dp, end = 20.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Box() {
+                Image(
+                    painterResource(R.drawable.poro),
+                    "No Champions Found.",
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier
+                        .shadow(
+                            elevation = 100.dp,
+                            shape = CircleShape,
+                            spotColor = Color(0xff0397AB)
+                        )
+                        .size(300.dp)
+                )
+            }
+            Text(
+                text = "Oops I Ate All The Champions",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xDDF3F2F3)
+            )
+
+        }
+}
+
+@Composable
+fun MyChampionCard(
+    modifier: Modifier = Modifier,
+    champ: MyChamp,
+    navController: NavController,
+    isMyChamp: Boolean
+) {
+    Card(
+        modifier = Modifier
+            .height(200.dp)
+            .width(150.dp)
+            .clickable {
+                if (isMyChamp)
+                    navController.navigate("my_champ_detail_view/${champ.id}")
+                else
+                    navController.navigate("all_champ_detail_view/${champ.id}")
+            },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent,
+
+            )
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Champion Image
+            MyChampImage(champ)
+
+            // Champion Name
+            Text(
+                text = champ.name ?: "Unknown Champ", // Make name dynamic
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.White,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp)
+            )
+
+            // Champion Title
+            Text(
+                text = champ.title ?: "Unknown Title", // Make title dynamic
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Gray,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun MyChampImage(champ: MyChamp) {
     Image(
         painter = rememberAsyncImagePainter(
             ImageRequest.Builder(LocalContext.current)
