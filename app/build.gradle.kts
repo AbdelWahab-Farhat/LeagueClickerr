@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -70,6 +71,7 @@ dependencies {
     debugImplementation(libs.androidx.navigation.compose)
 
 
+
     val  ktor_version = "2.2.3"
     implementation ("io.ktor:ktor-client-core:$ktor_version")
     implementation ("io.ktor:ktor-client-android:$ktor_version")
@@ -78,6 +80,7 @@ dependencies {
     implementation ("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("io.coil-kt:coil-compose:2.0.0")
 
     val lifecycle_version = "2.8.5"
 
