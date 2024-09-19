@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampDetailsEvent
+import com.smallprojacts.leagueclicker.presentation.views.my_champ_details.MyChampDetailsState
 
 @Composable
-fun StatMeterGrid(statMap: Map<String, Int>) {
+fun StatMeterGrid(statMap: Map<String, Int>, state: MyChampDetailsState, onEvent: (MyChampDetailsEvent) -> Unit) {
     val itemsPerRow = 2
     val statList = statMap.toList().chunked(itemsPerRow)
     Column(

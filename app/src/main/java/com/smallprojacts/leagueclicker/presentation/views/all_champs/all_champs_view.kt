@@ -58,7 +58,10 @@ fun AllChampPage(
             Spacer(modifier = Modifier.height(20.dp))
 
             Box(
-                modifier = modifier.clickable { }
+                modifier = modifier.clickable {
+                    navController.clearBackStack("search")
+                    navController.navigate("search")
+                }
             ) {
                 CustomTextField(
                     isEnabled = false,

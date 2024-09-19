@@ -5,11 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -53,63 +50,65 @@ fun SearchScreen(modifier: Modifier = Modifier, navController: NavHostController
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CustomChampTopBar()
+                CustomChampTopBar(navController = navController)
                 Box(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
                 ) {
-                    CustomTextField(
-                        label = null,
-                        placeholder = {
-                            Text(
-                                text = "Search",
-                                color = Color.White
+                    CustomTextField(label = null, placeholder = {
+                        Text(
+                            text = "Search", color = Color.White
+                        )
+                    }, suffexicon = {
+                        Row {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search Icon",
+                                tint = Color.White,
+                                modifier = Modifier.padding(end = 8.dp)
                             )
-                        },
-                        suffexicon = {
-                            Row {
-                                Icon(
-                                    imageVector = Icons.Default.Search,
-                                    contentDescription = "Search Icon",
-                                    tint = Color.White,
-                                    modifier = Modifier.padding(end = 8.dp)
-                                )
-                                Icon(
-                                    imageVector = Icons.Default.MoreVert,
-                                    contentDescription = "Search Icon",
-                                    tint = Color.White,
-                                    modifier = Modifier.padding(end = 8.dp)
-                                )
-                            }
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = "Search Icon",
+                                tint = Color.White,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
                         }
-                    )
+                    })
                 }
             }
 
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
-                .padding(start = 20.dp, end = 20.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val stats = mapOf(
-                "Strength" to 1,
-                "Intelligence" to 5,
-                "Speed" to 3,
-                "Health" to 2,
-                "Attack Damage" to 4,
-                "safas" to 1,
-                ";kga" to 1,
-                "p9ipwt" to 1,
-                "gkasg;" to 1,
-                "ask" to 1,
-            )
+        val stats = mapOf(
+            "Strength" to 1,
+            "Intelligence" to 5,
+            "Speed" to 3,
+            "Health" to 2,
+            "Attack Damage" to 4,
+            "safas" to 1,
+            ";kga" to 1,
+            "p9ipwt" to 1,
+            "gkasg;" to 1,
+            "ask" to 1,
+        )
+//        ChampionGrid(
+//            modifier = Modifier
+//                .padding(innerPadding)
+//                .padding(horizontal = 20.dp),
+//            champs = c,
+//        )
+//        Column(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .verticalScroll(rememberScrollState())
+//                .padding(innerPadding)
+//                .padding(start = 20.dp, end = 20.dp),
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//
 //            Box() {
 //                Image(
 //                    painterResource(R.drawable.poro),
@@ -131,7 +130,7 @@ fun SearchScreen(modifier: Modifier = Modifier, navController: NavHostController
 //                fontWeight = FontWeight.Bold,
 //                color = Color(0xDDF3F2F3)
 //            )
-//            ChampionGrid(champs = stats)
-        }
+//
+//        }
     }
 }

@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
 
 
 data class Stats(
-
     @SerialName("id") var id: Int? = null,
     @SerialName("champion_id") var championId: Int? = null,
     @SerialName("ad") var ad: Int? = null,

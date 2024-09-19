@@ -16,6 +16,8 @@ data class Abilities(
     @SerialName("ability_type") var abilityType: String? = null,
     @SerialName("ability_image") var abilityImage: String? = null,
     @SerialName("created_at") var createdAt: String? = null,
-    @SerialName("updated_at") var updatedAt: String? = null
+    @SerialName("updated_at") var updatedAt: String? = null,
+    var isActive: Boolean = false
+
 
 )
