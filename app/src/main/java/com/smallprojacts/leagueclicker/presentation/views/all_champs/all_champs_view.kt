@@ -60,6 +60,7 @@ fun AllChampPage(
             .padding(innerPadding)
             .padding(horizontal = 20.dp),
         champs = champs,
+        navController = navController,
         header = {
             Spacer(modifier = Modifier.height(20.dp))
 

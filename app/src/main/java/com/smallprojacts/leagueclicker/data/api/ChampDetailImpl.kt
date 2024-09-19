@@ -8,7 +8,6 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.utils.EmptyContent.headers
-
 class ChampDetailImpl : ChampDetailsRepository {
     override val client = ClientConfig.client
     override suspend fun getChampDetails(champId: Int): AllChamp {
@@ -29,7 +28,7 @@ class ChampDetailImpl : ChampDetailsRepository {
                     //  append("Authorization", "Bearer ${TokenManager.getToken()}")
                     append(
                         "Authorization",
-                        "Bearer 1|9yfUlOJYbDxZUSKHE27ZwLTq403PGQ0ufdYpYKO7a619c408"
+                        "Bearer 2|VYlyjcS0wiuqT9bSLnM2KUUVOXabjl5M9glFwIQV2f59352e"
                     )
                 }
             }.body<List<MyChamp>>()

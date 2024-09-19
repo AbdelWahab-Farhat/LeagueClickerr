@@ -68,7 +68,8 @@ fun HomePage(
         modifier = Modifier
             .padding(innerPadding)
             .padding(horizontal = 20.dp),
-        champs = champs,  // Pass the fetched list of champions
+        champs = champs,
+        navController = navController,
         header = {
 
             Spacer(modifier = Modifier.height(20.dp))

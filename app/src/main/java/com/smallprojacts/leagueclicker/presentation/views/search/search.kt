@@ -253,6 +253,7 @@ fun SearchScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .padding(horizontal = 20.dp),
+                navController = navController,
                 champs = state.filteredChampions,
             )
         else
