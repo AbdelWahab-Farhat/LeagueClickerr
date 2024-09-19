@@ -248,7 +248,6 @@ fun SearchScreen(
             }
         },
     ) { innerPadding ->
-        if (state.filteredChampions.isNotEmpty())
             ChampionGrid(
                 modifier = Modifier
                     .padding(innerPadding)
@@ -256,39 +255,5 @@ fun SearchScreen(
                 navController = navController,
                 champs = state.filteredChampions,
             )
-        else
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(innerPadding)
-                    .padding(start = 20.dp, end = 20.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Box() {
-                    Image(
-                        painterResource(R.drawable.poro),
-                        "No Champions Found.",
-                        alignment = Alignment.Center,
-                        contentScale = ContentScale.Crop,
-                        modifier = modifier
-                            .shadow(
-                                elevation = 100.dp,
-                                shape = CircleShape,
-                                spotColor = Color(0xff0397AB)
-                            )
-                            .size(300.dp)
-                    )
-                }
-                Text(
-                    text = "Oops I Ate All The Champions",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xDDF3F2F3)
-                )
-
-            }
     }
 }
