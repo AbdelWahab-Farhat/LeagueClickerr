@@ -33,11 +33,11 @@ class ChampDetailImpl : ChampDetailsRepository {
         return try {
             client.get("${RemoteRoutes.GETMYDETAILCHAMP}") {
                 headers {
-                    //  append("Authorization", "Bearer ${TokenManager.getToken()}")
-                    append(
-                        "Authorization",
-                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
-                    )
+                      append("Authorization", "Bearer ${TokenManager.getToken()}")
+//                    append(
+//                        "Authorization",
+//                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
+//                    )
                 }
             }.body<List<MyChamp>>()
         } catch (e: Exception) {
@@ -53,10 +53,12 @@ class ChampDetailImpl : ChampDetailsRepository {
 
             val res = client.post("${RemoteRoutes.ADDCHAMP}") {
                 headers {
-                    append(
-                        "Authorization",
-                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
-                    )
+                    append("Authorization", "Bearer ${TokenManager.getToken()}")
+
+//                    append(
+//                        "Authorization",
+//                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
+//                    )
                 }
                 contentType(ContentType.Application.FormUrlEncoded)
                 setBody(FormDataContent(Parameters.build {

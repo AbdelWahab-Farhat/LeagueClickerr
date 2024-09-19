@@ -17,7 +17,14 @@ import kotlinx.serialization.json.jsonPrimitive
 
 class NetworkService  {
 
-
+     fun logout(): Boolean {
+        return try {
+            TokenManager.clearToken()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
     suspend fun registerUser(username: String, email: String, password: String):Int {
 
         val response = ClientConfig.client.post(RemoteRoutes.REGISTER) {
@@ -34,6 +41,7 @@ class NetworkService  {
                 0
             }
         }
+
     }
     suspend fun loginUser(email: String, password: String) {
          try {

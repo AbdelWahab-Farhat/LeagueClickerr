@@ -2,6 +2,7 @@ package com.smallprojacts.leagueclicker.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,11 +26,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.smallprojacts.leagueclicker.R
+import com.smallprojacts.leagueclicker.data.api.NetworkService
 
 
 @Composable
-fun ProfileNav(name: String? = "Ace D Roger", imageId:Int = R.drawable.champ1) {
+fun ProfileNav(name: String? = "Ace D Roger", imageId:Int = R.drawable.champ1, navController: NavHostController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,7 +53,10 @@ fun ProfileNav(name: String? = "Ace D Roger", imageId:Int = R.drawable.champ1) {
                                 Color(0xFF0AC8B9)
                             )
                         ), CircleShape
-                    ),
+                    ).clickable {
+                        NetworkService().logout();
+                        navController.navigate("login_view")
+                    },
                 contentScale = ContentScale.Fit
             )
 

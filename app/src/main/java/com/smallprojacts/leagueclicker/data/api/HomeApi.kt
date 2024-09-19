@@ -90,10 +90,12 @@ class HomeApi {
 
             ClientConfig.client.get(RemoteRoutes.GETCHAMP) {
                 headers {
-                    append(
-                        "Authorization",
-                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
-                    )
+                    append("Authorization", "Bearer ${TokenManager.getToken()}")
+
+//                    append(
+//                        "Authorization",
+//                        "Bearer 1|NmY8owx1nVjRnQV4y71lv0eCUk0sh8HUPfJ3g2pX48b49411"
+//                    )
                 }
             }.body<List<MyChamp>>()
         } catch (e: Exception) {
@@ -102,4 +104,5 @@ class HomeApi {
             emptyList() // Return an empty list if there's an exception
         }
     }
+
 }
