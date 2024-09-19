@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -20,7 +22,10 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -28,9 +33,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.smallprojacts.leagueclicker.R
 import com.smallprojacts.leagueclicker.domain.models.AllChamp
 
 @Composable
@@ -50,24 +58,59 @@ fun ChampionGrid(
     header: @Composable ColumnScope.() -> Unit = {},
 ) {
     val statList = champs.toList()
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(itemsPerRow),
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(15.dp),
-        horizontalArrangement = Arrangement.spacedBy(15.dp),
-    ) {
-        // Display the header if any
-        item(span = { GridItemSpan(itemsPerRow) }) {
-            Column {
-                header()
+    if (champs.isNotEmpty())
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(itemsPerRow),
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
+        ) {
+            // Display the header if any
+            item(span = { GridItemSpan(itemsPerRow) }) {
+                Column {
+                    header()
+                }
+            }
+
+            // Render each champion card
+            items(champs) { champ ->
+                ChampionCard(champ = champ, navController = navController, isMyChamp = isMyChamp)
             }
         }
+    else
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+//                .padding(innerPadding)
+                .padding(start = 20.dp, end = 20.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        // Render each champion card
-        items(champs) { champ ->
-            ChampionCard(champ = champ, navController = navController, isMyChamp = isMyChamp)
+            Box() {
+                Image(
+                    painterResource(R.drawable.poro),
+                    "No Champions Found.",
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier
+                        .shadow(
+                            elevation = 100.dp,
+                            shape = CircleShape,
+                            spotColor = Color(0xff0397AB)
+                        )
+                        .size(300.dp)
+                )
+            }
+            Text(
+                text = "Oops I Ate All The Champions",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xDDF3F2F3)
+            )
+
         }
-    }
 }
 
 @Composable
